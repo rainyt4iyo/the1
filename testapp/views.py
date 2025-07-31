@@ -91,6 +91,16 @@ def judge_area(area):
     else:
         return render_template('testapp/mid_judge.html', area=area)
     
+@app.route('/funopen/judge/<area>', methods=['GET'])
+def judge_area_fo(area):
+    
+    area_list = ["A","B","C","D","E","F","G","H","I","J","K","L","BB"]
+    if area not in area_list:
+        return render_template('testapp/error.html')
+    else:
+        return render_template('testapp/fo_judge.html', area=area)
+    
+    
 
 @app.route('/mid/judge/<area>/team/<int:team_number>', methods=['GET','POST'])
 def judge_page(area, team_number):
@@ -174,6 +184,89 @@ def judge_page(area, team_number):
         
                 
         return redirect(url_for('judge_area', area=area))
+    
+@app.route('/fun/judge/<area>/team/<int:team_number>', methods=['GET','POST'])
+def judge_page_fun(area, team_number):
+    if request.method == 'GET':
+        conn = pymysql.connect(host='localhost',
+                               user='t4',
+                               password='t4_password',
+                               database='myDB',
+                               cursorclass=pymysql.cursors.DictCursor)
+        
+        cursor = conn.cursor()
+        sql = '''SELECT id FROM fun_kadai WHERE area = %s'''
+        cursor.execute(sql, (area,))
+        res = cursor.fetchall()
+        res = tuple(d['id'] for d in res)
+
+        mins = 3 * team_number - 2
+        maxs = 3 * team_number + 1
+
+        sql = '''SELECT player FROM fun_player WHERE id >= %s and id < %s'''
+        cursor.execute(sql, (mins, maxs))
+        name = cursor.fetchall()
+        name = tuple(d['player'] for d in name)
+
+        sql = '''SELECT team FROM fun_player WHERE id = %s'''
+        cursor.execute(sql, mins)
+        tn = cursor.fetchone()
+        team_name = tn['team']
+
+        checked_list = []
+        for r in res:
+            for i in range(mins, maxs):
+                sql = '''SELECT kadai_%s FROM fun_result WHERE id = %s'''
+                cursor.execute(sql, (r,i))
+                row = cursor.fetchone()
+                if row and row[f'kadai_{r}'] == 1:
+                    checked_list.append((r,i))
+
+        conn.close()
+        return render_template('testapp/fun_judge_team.html',
+                               area=area,
+                               team_number=team_number,
+                               min=mins,
+                               max=maxs,
+                               res=res,
+                               name=name,
+                               team_name=team_name,
+                               checked_list=checked_list)
+    
+    if request.method == 'POST':
+
+        conn = pymysql.connect(host='localhost',
+                       user='t4',
+                       password='t4_password',
+                       database='myDB',
+                       cursorclass=pymysql.cursors.DictCursor)
+        
+        try:
+            cursor = conn.cursor()
+            sql = "SELECT id FROM fun_kadai WHERE area = %s"
+            cursor.execute(sql, (area,))
+            res = cursor.fetchall()
+            res = tuple(d['id'] for d in res)
+            mins = 3*team_number-2
+            maxs = 3*team_number+1
+            print(res, mins, maxs)
+            conn.commit()
+
+            for r in res:
+                for i in range(mins, maxs):
+                    checked = request.form.get(f"check_{i}_{r}")
+                    value = 1 if checked else 0
+                    sql = f"UPDATE fun_result SET `kadai_{r}` = {value} WHERE id = {i}"
+                    cursor.execute(sql)
+                    conn.commit()
+
+        except Exception as e:
+            print(e)
+        finally:
+            conn.close()
+        
+                
+        return redirect(url_for('judge_area_fo', area=area))
     
 
 
@@ -260,6 +353,88 @@ def judge_page_special(area, team_number, handorfoot):
         return redirect(url_for('judge_area', area=area))
 
 
+@app.route('/fun/judge/<area>/team/<int:team_number>/<handorfoot>', methods=['GET','POST'])
+def judge_page_special_fun(area, team_number, handorfoot):
+    if request.method == 'GET':
+        conn = pymysql.connect(host='localhost',
+                               user='t4',
+                               password='t4_password',
+                               database='myDB',
+                               cursorclass=pymysql.cursors.DictCursor)
+        
+        cursor = conn.cursor()
+        sql = '''SELECT id FROM fun_kadai WHERE area = %s'''
+        cursor.execute(sql, (area,))
+        res = cursor.fetchall()
+        res = tuple(d['id'] for d in res)
+
+        mins = 3 * team_number - 2
+        maxs = 3 * team_number + 1
+
+        sql = '''SELECT player FROM fun_player WHERE id >= %s and id < %s'''
+        cursor.execute(sql, (mins, maxs))
+        name = cursor.fetchall()
+        name = tuple(d['player'] for d in name)
+
+        sql = '''SELECT team FROM fun_player WHERE id = %s'''
+        cursor.execute(sql, mins)
+        tn = cursor.fetchone()
+        team_name = tn['team']
+
+        checked_list = []
+        for r in res:
+            for i in range(mins, maxs):
+                sql = f'''SELECT kadai_{r} FROM fun_result WHERE id = %s'''
+                cursor.execute(sql, (i,))
+                row = cursor.fetchone()
+                if row and row[f'kadai_{r}'] == 2:
+                    checked_list.append((r,i))
+
+        conn.close()
+        return render_template('testapp/fun_judge_team_special.html',
+                               area=area,
+                               team_number=team_number,
+                               min=mins,
+                               max=maxs,
+                               res=res,
+                               name=name,
+                               team_name=team_name,
+                               checked_list=checked_list,
+                               handorfoot=handorfoot)
+    
+    if request.method == 'POST':
+
+        conn = pymysql.connect(host='localhost',
+                       user='t4',
+                       password='t4_password',
+                       database='myDB',
+                       cursorclass=pymysql.cursors.DictCursor)
+        
+        try:
+            cursor = conn.cursor()
+            sql = "SELECT id FROM fun_kadai WHERE area = %s"
+            cursor.execute(sql, (area,))
+            res = cursor.fetchall()
+            res = tuple(d['id'] for d in res)
+            mins = 3*team_number-2
+            maxs = 3*team_number+1
+            conn.commit()
+
+            for r in res:
+                for i in range(mins, maxs):
+                    checked = request.form.get(f"check_{i}_{r}")
+                    value = 2 if checked else 0
+                    sql = f"UPDATE fun_result SET `kadai_{r}` = {value} WHERE id = {i}"
+                    cursor.execute(sql)
+                    conn.commit()
+
+        except Exception as e:
+            print(e)
+        finally:
+            conn.close()        
+                
+        return redirect(url_for('judge_area_fo', area=area))
+
 
 @app.route('/register_kadai', methods=['GET','POST'])
 def registerpage_kadai():
@@ -328,6 +503,9 @@ def registerpage_kadai():
         conn.close()
                 
         return redirect(url_for(url))
+    
+
+
     
 
 @app.route('/registered_kadai_list_fun', methods=['GET', 'POST'])

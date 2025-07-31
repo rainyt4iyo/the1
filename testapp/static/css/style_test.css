@@ -69,6 +69,7 @@ button:hover {
     background-color: #27ae60;
 }
 
+
 /* フォーム項目全体 */
 form > div {
     margin-bottom: 20px;
@@ -484,4 +485,88 @@ table.onehandorfoot th {
   min-width: 120px;
   text-align: left;
   text-align: center;
+}
+
+
+.fun-open-grid {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 20px;
+  margin-top: 20px;
+}
+
+.fun-open-grid .column {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 10px;
+}
+
+
+.fun-open-grid {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 20px;
+  margin-top: 20px;
+}
+
+.fun-open-grid .column {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 10px;
+}
+
+.fun-button,
+.open-button {
+  width: 80px;
+  height: 60px;
+  font-size: 20px;
+  font-weight: bold;
+  border: none;
+  border-radius: 10px;
+  color: white;
+  box-shadow: 0 4px 6px rgba(0,0,0,0.2);
+  transition: transform 0.2s;
+}
+
+.fun-button {
+  background-color: #f1c40f;
+}
+
+.open-button {
+  background-color: #e74c3c;
+}
+
+.fun-button:hover,
+.open-button:hover {
+  transform: scale(1.05);
+}
+
+.fun-button,
+.open-button {
+  width: 120px;          
+  font-size: 20px;
+  font-weight: bold;
+  border: none;
+  border-radius: 10px;
+  color: white;
+  box-shadow: 0 4px 6px rgba(0,0,0,0.2);
+  transition: transform 0.2s, box-shadow 0.2s;
+  outline: none;
+  cursor: pointer;
+  background-clip: padding-box;
+}
+
+.fun-button:hover,
+.open-button:hover {
+  transform: scale(1.05);
+  box-shadow: 0 6px 10px rgba(0, 0, 0, 0.3);
+}
+
+.fun-button:focus,
+.open-button:focus {
+  outline: none;
 }

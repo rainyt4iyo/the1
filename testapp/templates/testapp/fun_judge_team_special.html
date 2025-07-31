@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/style_test.css') }}">
+    <title>ジャッジエリアA</title>
+</head>
+<body>
+<nav class="navbar">
+  <div class="nav-container">
+    <a href="/" class="nav-logo">THE 3</a>
+    <ul class="nav-menu">
+      <li><a href="/">ジャッジエリアA</a></li>
+    </ul>
+  </div>
+</nav>
+
+<div class="container mt-4">
+    <h2>ジャッジエリア : {{ area }}</h2>
+    <h3>FUN / Team {{ team_number }}: {{ team_name }}</h3>
+
+    {%if handorfoot=="onehand"%}
+      <h3> 片腕チャレンジ / One-Hand Challenge</h3>
+    {% endif %}
+    {%if handorfoot=="onefoot"%}
+      <h3> 片足チャレンジ / One-Foot Challenge</h3>
+    {% endif %}
+
+    <button class="button-onehand" onclick="location.href='/fun/judge/{{ area }}/team/{{ team_number }}'"> back / 戻る </button>
+
+    <form action="/fun/judge/{{ area }}/team/{{ team_number }}/{{handorfoot}}" method="POST">
+        <table class="onehandorfoot" border="1">
+            <tr>
+                <th>名前</th>
+                {% for i in res %}
+                    <th>No.{{ i }}</th>
+                {% endfor %}
+            </tr>
+            {% for j in range(min, max) %}
+            <tr>
+                <td>{{ name[j-min] }}</td>
+                {% for i in res %}
+                    <td>
+                      {% if (i,j) in checked_list %}
+                        <input type="checkbox" name="check_{{ j }}_{{ i }}" value="1" checked>
+                      {% else %}
+                        <input type="checkbox" name="check_{{ j }}_{{ i }}" value="1">
+                      {% endif %}
+                    </td>
+                {% endfor %}
+            </tr>
+            {% endfor %}
+        </table>
+        <br>
+        <button type="submit">送信 / Submit</button>
+    </form>
+</div>
+
+</body>
+</html>

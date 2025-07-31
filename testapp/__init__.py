@@ -1,3 +1,4 @@
+import os
 from flask import Flask
 import pymysql
 import openpyxl
@@ -5,196 +6,91 @@ import openpyxl
 app = Flask(__name__)
 app.config.from_object('testapp.config')
 
-conn = pymysql.connect(host='localhost',
-                       user='t4',
-                       password='t4_password',
-                       database='myDB',
-                       cursorclass=pymysql.cursors.DictCursor)
+# 基本ディレクトリの取得（このファイルの場所）
+BASE_DIR = os.path.dirname(os.path.abspath(__file__))
+EXCEL_PATH = os.path.join(BASE_DIR, "static.xlsx")
 
-conn = pymysql.connect(host='localhost',
-                       user='t4',
-                       password='t4_password',
-                       database='myDB',
-                       cursorclass=pymysql.cursors.DictCursor)
+# DB接続（localhost→127.0.0.1で試すのも良い）
+conn = pymysql.connect(
+    host='127.0.0.1',
+    user='t4',
+    password='t4_password',
+    database='myDB',
+    cursorclass=pymysql.cursors.DictCursor
+)
 cursor = conn.cursor()
 
-sql = "DROP TABLE if exists fun_player"
-cursor.execute(sql)
-sql = "DROP TABLE if exists mid_player"
-cursor.execute(sql)
-sql = "DROP TABLE if exists open_player"
-cursor.execute(sql)
-sql = "DROP TABLE if exists fun_team"
-cursor.execute(sql)
-sql = "DROP TABLE if exists mid_team"
-cursor.execute(sql)
-sql = "DROP TABLE if exists open_team"
-cursor.execute(sql)
+# ログ：接続DB確認
+cursor.execute("SELECT DATABASE()")
+print("[DB] Connected to:", cursor.fetchone())
 
-sql = "CREATE TABLE IF NOT EXISTS fun_player (id INT UNIQUE, player VARCHAR(255), team VARCHAR(255))"
-cursor.execute(sql)
-conn.commit()
-sql = "CREATE TABLE IF NOT EXISTS mid_player (id INT UNIQUE, player VARCHAR(255), team VARCHAR(255))"
-cursor.execute(sql)
-conn.commit()
-sql = "CREATE TABLE IF NOT EXISTS open_player (id INT UNIQUE, player VARCHAR(255), team VARCHAR(255))"
-cursor.execute(sql)
-conn.commit()
+# テーブル作成（DROPはせず、なければ作成のみ）
+tables_to_create = {
+    "fun_player": "CREATE TABLE IF NOT EXISTS fun_player (id INT UNIQUE, player VARCHAR(255), team VARCHAR(255))",
+    "mid_player": "CREATE TABLE IF NOT EXISTS mid_player (id INT UNIQUE, player VARCHAR(255), team VARCHAR(255))",
+    "open_player": "CREATE TABLE IF NOT EXISTS open_player (id INT UNIQUE, player VARCHAR(255), team VARCHAR(255))",
+    "fun_kadai": "CREATE TABLE IF NOT EXISTS fun_kadai (id INT UNIQUE, area VARCHAR(255), point INT)",
+    "mid_kadai": "CREATE TABLE IF NOT EXISTS mid_kadai (id INT UNIQUE, area VARCHAR(255), point INT)",
+    "open_kadai": "CREATE TABLE IF NOT EXISTS open_kadai (id INT UNIQUE, area VARCHAR(255), point INT)",
+}
 
-print("--------------------------------------")
-print("[DB] > fun_player fun_team 初期化完了")
-print("[DB] > mid_player mid_team 初期化完了")
-print("[DB] > open_player open_team 初期化完了")
-print("--------------------------------------")
+for table, create_sql in tables_to_create.items():
+    cursor.execute(create_sql)
+    conn.commit()
+    print(f"[DB] Table '{table}' ensured.")
 
-
-sql = "CREATE TABLE IF NOT EXISTS mid_kadai (id INT UNIQUE, area VARCHAR(255), point INT)"
-cursor.execute(sql)
-conn.commit()
-conn.close()
-
-conn = pymysql.connect(host='localhost',
-                       user='t4',
-                       password='t4_password',
-                       database='myDB',
-                       cursorclass=pymysql.cursors.DictCursor)
-
-
-cursor = conn.cursor()
-sql = "CREATE TABLE IF NOT EXISTS fun_kadai (id INT UNIQUE, area VARCHAR(255), point INT)"
-cursor.execute(sql)
-conn.commit()
-conn.close()
-
-conn = pymysql.connect(host='localhost',
-                       user='t4',
-                       password='t4_password',
-                       database='myDB',
-                       cursorclass=pymysql.cursors.DictCursor)
-
-
-cursor = conn.cursor()
-sql = "CREATE TABLE IF NOT EXISTS open_kadai (id INT UNIQUE, area VARCHAR(255), point INT)"
-cursor.execute(sql)
-conn.commit()
-
-print("[DB] > kadai 初期化完了")
-print("--------------------------------------")
-
-conn = pymysql.connect(host='localhost',
-                        user='t4',
-                        password='t4_password',
-                        database='myDB',
-                        cursorclass=pymysql.cursors.DictCursor)
-cursor = conn.cursor()
-
+# Excel読み込み
 wb = openpyxl.load_workbook("static.xlsx")
 
-ws = wb["FUN"]
-for i in range(1,145):
-    if ws.cell(i,1).value != "None" and ws.cell(i,2).value != "None" and ws.cell(i,3).value != "None":
-        temp = (ws.cell(i,1).value, ws.cell(i,2).value, ws.cell(i,3).value)
-        sql = "INSERT INTO fun_player (id, player, team ) VALUES (%s, %s, %s)"
-        cursor.execute(sql, temp)
+def insert_players(sheet_name, table_name):
+    ws = wb[sheet_name]
+    # 既存データは削除してから挿入（必要なら）
+    cursor.execute(f"DELETE FROM {table_name}")
+    conn.commit()
+
+    for i in range(1, 145):
+        id_val = ws.cell(i, 1).value
+        player_val = ws.cell(i, 2).value
+        team_val = ws.cell(i, 3).value
+        # NoneはPythonのNone型なので、文字列 "None" とは異なる
+        if id_val is not None and player_val is not None and team_val is not None:
+            temp = (id_val, player_val, team_val)
+            sql = f"INSERT INTO {table_name} (id, player, team) VALUES (%s, %s, %s)"
+            cursor.execute(sql, temp)
+    conn.commit()
+    print(f"[DB] Inserted players into '{table_name}' from sheet '{sheet_name}'.")
+
+insert_players("FUN", "fun_player")
+insert_players("MIDDLE", "mid_player")
+insert_players("OPEN", "open_player")
+
+# resultテーブルの作成と初期化チェック
+def create_result_table(table_name):
+    cursor.execute(f"SHOW TABLES LIKE '{table_name}'")
+    result = cursor.fetchone()
+    if not result:
+        columns = ",\n        ".join([f"kadai_{i} INT" for i in range(1, 31)])
+        sql_create = f'''
+        CREATE TABLE {table_name} (
+            id INT PRIMARY KEY,
+            {columns}
+        )
+        '''
+        cursor.execute(sql_create)
         conn.commit()
 
-ws = wb["MIDDLE"]
-for i in range(1,145):
-    if ws.cell(i,1).value != "None" and ws.cell(i,2).value != "None" and ws.cell(i,3).value != "None":
-        temp = (ws.cell(i,1).value, ws.cell(i,2).value, ws.cell(i,3).value)
-        sql = "INSERT INTO mid_player (id, player, team ) VALUES (%s, %s, %s)"
-        cursor.execute(sql, temp)
+        for i in range(1, 145):
+            values = ", ".join(["0"] * 30)
+            sql_insert = f"INSERT INTO {table_name} (id, {', '.join([f'kadai_{j}' for j in range(1,31)])}) VALUES ({i}, {values})"
+            cursor.execute(sql_insert)
         conn.commit()
+        print(f"[DB] > {table_name} を初期化しました")
+    else:
+        print(f"[DB] > {table_name} は存在しています")
 
-ws = wb["OPEN"]
-for i in range(1,145):
-    if ws.cell(i,1).value != "None" and ws.cell(i,2).value != "None" and ws.cell(i,3).value != "None":
-        temp = (ws.cell(i,1).value, ws.cell(i,2).value, ws.cell(i,3).value)
-        sql = "INSERT INTO open_player (id, player, team ) VALUES (%s, %s, %s)"
-        cursor.execute(sql, temp)
-        conn.commit()
-
-
-
-cursor.execute("SHOW TABLES LIKE 'fun_result'")
-result = cursor.fetchone()
-if not result:
-
-    columns = ",\n        ".join([f"kadai_{i} INT" for i in range(1, 31)])
-
-    sql_create = f'''
-    CREATE TABLE fun_result (
-        id INT PRIMARY KEY,
-        {columns}
-    )
-    '''
-    cursor.execute(sql_create)
-    conn.commit()
-
-    # データ挿入
-    for i in range(1, 145):
-        values = ", ".join(["0"] * 30)  
-        sql_insert = f"INSERT INTO fun_result (id, {', '.join([f'kadai_{j}' for j in range(1,31)])}) VALUES ({i}, {values})"
-        cursor.execute(sql_insert)
-
-    conn.commit()
-    print("[DB] > fun_result を初期化しました")
-else:
-    print("[DB] > fun_result は存在しています")
-
-cursor.execute("SHOW TABLES LIKE 'mid_result'")
-result = cursor.fetchone()
-if not result:
-
-    columns = ",\n        ".join([f"kadai_{i} INT" for i in range(1, 31)])
-
-    sql_create = f'''
-    CREATE TABLE mid_result (
-        id INT PRIMARY KEY,
-        {columns}
-    )
-    '''
-    cursor.execute(sql_create)
-    conn.commit()
-
-    # データ挿入
-    for i in range(1, 145):
-        values = ", ".join(["0"] * 30)  
-        sql_insert = f"INSERT INTO mid_result (id, {', '.join([f'kadai_{j}' for j in range(1,31)])}) VALUES ({i}, {values})"
-        cursor.execute(sql_insert)
-
-    conn.commit()
-    print("[DB] > mid_result を初期化しました")
-else:
-    print("[DB] > mid_result は存在しています")
-
-
-cursor.execute("SHOW TABLES LIKE 'open_result'")
-result = cursor.fetchone()
-if not result:
-
-    columns = ",\n        ".join([f"kadai_{i} INT" for i in range(1, 31)])
-
-    sql_create = f'''
-    CREATE TABLE open_result (
-        id INT PRIMARY KEY,
-        {columns}
-    )
-    '''
-    cursor.execute(sql_create)
-    conn.commit()
-
-    # データ挿入
-    for i in range(1, 145):
-        values = ", ".join(["0"] * 30)  
-        sql_insert = f"INSERT INTO open_result (id, {', '.join([f'kadai_{j}' for j in range(1,31)])}) VALUES ({i}, {values})"
-        cursor.execute(sql_insert)
-
-    conn.commit()
-    print("[DB] > open_result を初期化しました")
-else:
-    print("[DB] > open_result は存在しています")
-
+create_result_table("fun_result")
+create_result_table("mid_result")
+create_result_table("open_result")
 
 cursor.close()
 conn.close()

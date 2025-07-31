@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="stylesheet" href="{{ url_for('static', filename='css/style_test.css') }}">
+  <title>ジャッジエリア {{ area }}</title>
+</head>
+<body>
+<nav class="navbar">
+  <div class="nav-container">
+    <a href="/" class="nav-logo">THE 3</a>
+    <ul class="nav-menu">
+      <li><a href="/">ジャッジエリア {{ area }}</a></li>
+    </ul>
+  </div>
+</nav>
+
+<div class="container mt-4">
+  <h2>ジャッジエリア {{ area }}</h2>
+  <h3>FUN & OPEN</h3>
+  <h2 class="title">チーム選択</h2>
+
+  <div class="fun-open-grid">
+    <div class="column">
+      <h4>FUN</h4>
+      {% for i in range(1, 49) %}
+        <button class="fun-button" onclick="location.href='/fun/judge/{{area}}/team/{{ i }}'">{{ i }}</button>
+      {% endfor %}
+    </div>
+    <div class="column">
+      <h4>OPEN</h4>
+      {% for i in range(1, 49) %}
+        <button class="open-button" onclick="location.href='/open/judge/{{area}}/team/{{ i }}'">{{ i }}</button>
+      {% endfor %}
+    </div>
+  </div>
+</div>
+</body>
+</html>
