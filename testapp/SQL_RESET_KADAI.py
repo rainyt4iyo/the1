@@ -1,7 +1,7 @@
 import pymysql
 
 conn = pymysql.connect(host='localhost',
-                       user='root',
+                       user='t4',
                        password='t4_password',
                        database='myDB',
                        cursorclass=pymysql.cursors.DictCursor)
@@ -14,7 +14,7 @@ conn.commit()
 conn.close()
 
 conn = pymysql.connect(host='localhost',
-                       user='root',
+                       user='t4',
                        password='t4_password',
                        database='myDB',
                        cursorclass=pymysql.cursors.DictCursor)
@@ -27,7 +27,7 @@ conn.commit()
 conn.close()
 
 conn = pymysql.connect(host='localhost',
-                       user='root',
+                       user='t4',
                        password='t4_password',
                        database='myDB',
                        cursorclass=pymysql.cursors.DictCursor)

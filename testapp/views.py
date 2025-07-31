@@ -21,7 +21,7 @@ def process_lobby():
 @app.route('/process_mid')
 def process_mid():
     conn = pymysql.connect(host='localhost',
-                        user='root',
+                        user='t4',
                         password='t4_password',
                         database='myDB',
                         cursorclass=pymysql.cursors.DictCursor)
@@ -33,7 +33,7 @@ def process_mid():
 @app.route('/mid_ranking')
 def mid_ranking():
     conn = pymysql.connect(host='localhost',
-                           user='root',
+                           user='t4',
                            password='t4_password',
                            database='myDB',
                            cursorclass=pymysql.cursors.DictCursor)
@@ -96,7 +96,7 @@ def judge_area(area):
 def judge_page(area, team_number):
     if request.method == 'GET':
         conn = pymysql.connect(host='localhost',
-                               user='root',
+                               user='t4',
                                password='t4_password',
                                database='myDB',
                                cursorclass=pymysql.cursors.DictCursor)
@@ -143,7 +143,7 @@ def judge_page(area, team_number):
     if request.method == 'POST':
 
         conn = pymysql.connect(host='localhost',
-                       user='root',
+                       user='t4',
                        password='t4_password',
                        database='myDB',
                        cursorclass=pymysql.cursors.DictCursor)
@@ -181,7 +181,7 @@ def judge_page(area, team_number):
 def judge_page_special(area, team_number, handorfoot):
     if request.method == 'GET':
         conn = pymysql.connect(host='localhost',
-                               user='root',
+                               user='t4',
                                password='t4_password',
                                database='myDB',
                                cursorclass=pymysql.cursors.DictCursor)
@@ -229,7 +229,7 @@ def judge_page_special(area, team_number, handorfoot):
     if request.method == 'POST':
 
         conn = pymysql.connect(host='localhost',
-                       user='root',
+                       user='t4',
                        password='t4_password',
                        database='myDB',
                        cursorclass=pymysql.cursors.DictCursor)
@@ -270,7 +270,7 @@ def registerpage_kadai():
     if request.method == 'POST':
 
         conn = pymysql.connect(host='localhost',
-                       user='root',
+                       user='t4',
                        password='t4_password',
                        database='myDB',
                        cursorclass=pymysql.cursors.DictCursor)
@@ -336,7 +336,7 @@ def registered_kadai_fun():
     if request.method == 'GET':
 
         conn = pymysql.connect(host='localhost',
-                            user='root',
+                            user='t4',
                             password='t4_password',
                             database='myDB',
                             cursorclass=pymysql.cursors.DictCursor)
@@ -355,7 +355,7 @@ def registered_kadai_fun():
         action = request.form.get("action")
         print(action)
         conn = pymysql.connect(host='localhost',
-                        user='root',
+                        user='t4',
                         password='t4_password',
                         database='myDB',
                         cursorclass=pymysql.cursors.DictCursor)
@@ -387,7 +387,7 @@ def registered_kadai_mid():
     if request.method == 'GET':
 
         conn = pymysql.connect(host='localhost',
-                            user='root',
+                            user='t4',
                             password='t4_password',
                             database='myDB',
                             cursorclass=pymysql.cursors.DictCursor)
@@ -406,7 +406,7 @@ def registered_kadai_mid():
         action = request.form.get("action")
         print(action)
         conn = pymysql.connect(host='localhost',
-                        user='root',
+                        user='t4',
                         password='t4_password',
                         database='myDB',
                         cursorclass=pymysql.cursors.DictCursor)
@@ -438,7 +438,7 @@ def registered_kadai_open():
     if request.method == 'GET':
 
         conn = pymysql.connect(host='localhost',
-                            user='root',
+                            user='t4',
                             password='t4_password',
                             database='myDB',
                             cursorclass=pymysql.cursors.DictCursor)
@@ -457,7 +457,7 @@ def registered_kadai_open():
         action = request.form.get("action")
         print(action)
         conn = pymysql.connect(host='localhost',
-                        user='root',
+                        user='t4',
                         password='t4_password',
                         database='myDB',
                         cursorclass=pymysql.cursors.DictCursor)
@@ -493,7 +493,7 @@ def temp_registered_kadai_list():
 def registered_player_list():
 
         conn = pymysql.connect(host='localhost',
-                            user='root',
+                            user='t4',
                             password='t4_password',
                             database='myDB',
                             cursorclass=pymysql.cursors.DictCursor)
