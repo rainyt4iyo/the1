@@ -1,0 +1,21 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/style_test.css') }}"/>
+    <title>フォームのテスト</title>
+</head>
+<body>
+    <h1>フォームのテスト</h1>
+    <p>ラジオボタン</p>
+    <label class="toggle-button-1">
+    <input type="checkbox", 
+        {% if checkbox_checked %} 
+            checked 
+        {% endif %}>
+    </label>
+    <button class="button-1">この状態で登録</button>
+</body>
+</html>

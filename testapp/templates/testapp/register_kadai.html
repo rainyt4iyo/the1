@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/style_test.css') }}"/>
+    <title>登録ページ</title>
+</head>
+<body>
+<nav class="navbar">
+  <div class="nav-container">
+    <a href="/" class="nav-logo">THE 3</a>
+    <ul class="nav-menu">
+      <li><a href="/register_kadai">課題登録</a></li>
+      <li><a href="/">TOP</a></li>
+    </ul>
+  </div>
+</nav>
+    <div class="container mt-4">
+    <h1>課題登録</h1>
+    <button class="button-1" onclick="location.href='./registered_kadai_list_fun'">課題一覧 FUN</button>
+    <button class="button-1" onclick="location.href='./registered_kadai_list_mid'">課題一覧 MIDDLE</button>
+    <button class="button-1" onclick="location.href='./registered_kadai_list_open'">課題一覧 OPEN</button>
+    <p>登録フォーム</p>
+    <form action="/register_kadai" method="POST">
+        <div>
+        <label for="n">ID</label>
+        <input name="id"></input>
+        </div>
+        <div>
+        <label for="c">カテゴリー</label>
+        <select name="category">
+            <option value="FUN">FUN</option>
+            <option value="MIDDLE">MIDDLE</option>
+            <option value="OPEN">OPEN</option>
+        </select>
+        </div>
+        <div>
+        <label for="p">課題ポイント</label>
+        <select name="point">
+            <option value="10">10</option>
+            <option value="15">15</option>
+            <option value="20">20</option>
+            <option value="25">25</option>
+            <option value="30">30</option>
+        </select>
+        </div>
+        <div>
+        <label for="a">エリア</label>
+        <select name="area">
+            <option value="A">A</option>
+            <option value="B">B</option>
+            <option value="C">C</option>
+            <option value="D">D</option>
+            <option value="E">E</option>
+            <option value="F">F</option>
+            <option value="G">G</option>
+            <option value="H">H</option>
+            <option value="I">I</option>
+            <option value="J">J</option>
+            <option value="K">K</option>
+            <option value="L">L</option>
+            <option value="BB">BB</option>
+        </select>
+        <button type="submit">登録</button>
+    </form>
+</div>
+</html>

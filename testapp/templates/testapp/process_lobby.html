@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/style_test.css') }}"/>
+    <title>テストページ</title>
+</head>
+<body>
+<nav class="navbar">
+  <div class="nav-container">
+    <a href="/" class="nav-logo">THE 3</a>
+    <ul class="nav-menu">
+      <ul class="nav-menu">
+      <li><a href="/register_kadai">課題登録</a></li>
+      <li><a href="/judge_lobby">ジャッジ管理</a></li>
+      <li><a href="/">TOP</a></li>
+    </ul>
+    </ul>
+  </div>
+</nav>
+    <div class="container mt-4">
+    <h2>進行状況</h2>
+    <li><a href="/process_mid">MIDDLE</a></li>
+</div>
+</html>

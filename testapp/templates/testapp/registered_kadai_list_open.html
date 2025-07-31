@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/style_test.css') }}"/>
+    <title>登録リスト</title>
+</head>
+<body>
+<nav class="navbar">
+  <div class="nav-container">
+    <a href="/" class="nav-logo">THE 3</a>
+    <ul class="nav-menu">
+      <li><a href="/register_kadai">課題登録</a></li>
+      <li><a href="/registered_kadai_list_mid">課題登録リスト</a></li>
+      <li><a href="/">TOP</a></li>
+    </ul>
+  </div>
+</nav>
+<div class="container mt-4">
+    <h1>OPEN</h1>
+    <button class="button-1" onclick="location.href='./register_kadai'">戻る</button>
+    <br>
+    <form action="/registered_kadai_list_open" method="POST">
+    <table border="1" align="center" class="table_design08" style="border-collapse: collapse">
+        <thead>
+        <tr>
+            <th>ID</th> 
+            <th>エリア</th> 
+            <th>課題pt.</th>
+            <th>削除</th>
+        </tr>
+        </thead>
+        {% for i in result %}
+        <tr>
+            <th>{{ i.id }}</td> 
+            <td>{{ i.area }}</td> 
+            <td>{{ i.point }}</td>
+            <td>
+                <button name="action" value={{ i.id }} class="button-2" type="submit">✖</button>
+            </td>
+        </tr>
+        {% endfor %}
+    </table>
+    <br>
+    <button class="button-3" name="action" value="nuke" type="submit">⚠全削除⚠</button>
+    </form>
+</div>
+</body>
+</html>

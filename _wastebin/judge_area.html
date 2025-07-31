@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="stylesheet" href="{{ url_for('static', filename='css/style_test.css') }}">
+  <title>ジャッジエリア</title>
+</head>
+<body>
+  <!-- グローバルナビ -->
+  <nav class="navbar">
+    <div class="nav-container">
+      <a href="/" class="nav-logo">THE 3</a>
+      <ul class="nav-menu">
+        <li><a href="/register_player">選手登録</a></li>
+        <li><a href="/registered_player_list">選手登録リスト</a></li>
+        <li><a href="/register_kadai">課題登録</a></li>
+        <li><a href="/registered_kadai_list">課題登録リスト</a></li>
+        <li><a href="/">TOP</a></li>
+      </ul>
+    </div>
+  </nav>
+
+  <div class="container mt-4">
+    <h2>ジャッジエリア {{ area }}</h2>
+
+    <!-- カテゴリーボタン -->
+    <div class="category-buttons">
+      {% for i in result %}
+      <button class="button-1" onclick="navigateToPage('{{ i }}')">{{ i }}</button>
+      {% endfor %}
+    </div>
+  </div>
+
+  <!-- JavaScript -->
+  <script>
+    function navigateToPage(category) {
+      const area = "{{ area }}";
+      if (category) {
+        window.location.href = `/judge/${area}/${category}`;
+      }
+    }
+  </script>
+</body>
+</html>
