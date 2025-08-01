@@ -681,17 +681,17 @@ def registered_player_list():
                 sql = "SELECT `id`, `player`, `team` from fun_player"
                 cursor.execute(sql)
                 result_fun = cursor.fetchall()
-                result_fun = sorted(result_fun, key=lambda x: x['id'])
+                result_fun = sorted(result_fun, key=lambda x: (x['id'] is None, x['id']))
                 
                 sql = "SELECT `id`, `player`, `team` from mid_player"
                 cursor.execute(sql)
                 result_mid = cursor.fetchall()
-                result_mid = sorted(result_mid, key=lambda x: x['id'])
+                result_mid = sorted(result_mid, key=lambda x: (x['id'] is None, x['id']))
 
                 sql = "SELECT `id`, `player`, `team` from open_player"
                 cursor.execute(sql)
                 result_open = cursor.fetchall()
-                result_open = sorted(result_open, key=lambda x: x['id'])
+                result_open = sorted(result_open, key=lambda x: (x['id'] is None, x['id']))
 
         finally:
             conn.close()
