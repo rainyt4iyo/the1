@@ -1,0 +1,147 @@
+body {
+    animation: fadeIn 0.8s ease-in;
+    font-family: 'Helvetica Neue', Arial, sans-serif;
+    margin: 0;
+    padding: 20px;
+    background: linear-gradient(135deg, #f5f7fa, #c3cfe2);
+    color: #333;
+    text-align: center;
+}
+
+/* フェードインキーフレーム */
+@keyframes fadeIn {
+    from { opacity: 0; transform: translateY(10px); }
+    to { opacity: 1; transform: translateY(0); }
+}
+
+/* バナー画像 */
+.header {
+    max-width: 100%;
+    height: auto;
+    display: block;
+    margin: 0 auto 1rem;
+    border-radius: 12px;
+    box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+}
+
+/* 見出し */
+h1, h2 {
+    margin: 1rem 0 0.5rem;
+    position: relative;
+}
+
+h1 {
+    font-size: 1.8rem;
+}
+
+h2 {
+    font-size: 1.4rem;
+    color: #222;
+}
+
+/* 下線装飾 */
+h1::after, h2::after {
+    content: '';
+    display: block;
+    width: 60px;
+    height: 3px;
+    background: #ffabf8;
+    margin: 0.5rem auto 0;
+    border-radius: 2px;
+}
+
+/* サブ見出し */
+h3 {
+    font-size: 1.1rem;
+    margin-top: 1.4rem;
+    color: #555;
+}
+
+/* 共通ボタンスタイル */
+button {
+    display: block;
+    width: 90%;
+    max-width: 400px;
+    margin: 12px auto;
+    padding: 15px;
+    font-size: 1rem;
+    font-weight: bold;
+    border: none;
+    border-radius: 12px;
+    cursor: pointer;
+    box-shadow: 0 6px 12px rgba(0,0,0,0.1);
+    transition: all 0.2s ease-in-out;
+    position: relative;
+    overflow: hidden;
+}
+
+/* ホバー時のキラキラ感 */
+button::after {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: -75%;
+    width: 50%;
+    height: 100%;
+    background: linear-gradient(120deg, rgba(255,255,255,0.2), rgba(255,255,255,0));
+    transform: skewX(-20deg);
+    transition: left 0.6s ease-in-out;
+}
+
+button:hover::after {
+    left: 125%;
+}
+
+button:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 10px 20px rgba(0,0,0,0.2);
+    opacity: 0.95;
+}
+
+/* 色ごとのスタイル */
+.grey_button {
+    background-color: #eebbde;
+    color: #333;
+}
+
+.green_button {
+    background: #4CAF50;
+    color: white;
+}
+
+.yellow_button {
+    background: #f4c542;
+    color: #222;
+}
+
+.red_button {
+    background: #e74c3c;
+    color: white;
+}
+
+/* レスポンシブ強化 */
+@media (min-width: 600px) {
+    h1 {
+        font-size: 2.2rem;
+    }
+
+    h2 {
+        font-size: 1.6rem;
+    }
+
+    button {
+        font-size: 1.1rem;
+    }
+}
+
+body{
+  font-family:'メイリオ', 'Meiryo', sans-serif;
+}
+
+
+.container {
+    max-width: 900px;
+    margin: 0 auto;
+    padding: 20px;
+    animation: fadeIn 0.6s ease-in-out;
+}

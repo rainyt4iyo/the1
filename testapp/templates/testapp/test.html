@@ -4,26 +4,23 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="{{ url_for('static', filename='css/style_test.css') }}"/>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/style_lobby.css') }}"/>
     <title>テストページ</title>
 </head>
 <body>
-<nav class="navbar">
-  <div class="nav-container">
-    <a href="/" class="nav-logo">THE 3</a>
-    <ul class="nav-menu">
-      <ul class="nav-menu">
-      <li><a href="/register_kadai">課題管理</a></li>
-      <li><a href="/registered_player_list">選手一覧</a></li>
-      <li><a href="/judge_lobby">ジャッジ管理</a></li>
-      <li><a href="/process_lobby">進行状況</a></li>
-      <li><a href="/ranking_lobby">順位</a></li>
-      <li><a href="/">TOP</a></li>
-    </ul>
-    </ul>
-  </div>
-</nav>
-    <div class="container mt-4">
-    <h2>THE 3 Judge System</h2>
-</div>
+<img class="header" src="/static/images/the3_banner.jpg"/>
+<h1> THE 3</h1>
+<h2>  -UNION IS STRENGTH- vol.4 大会特設ページ </h2>
+<h3>ABOUT "THE 3"</h3>
+<button class="grey_button" onclick="location.href='https://pump-climbing.com/gym/bpump/%e3%80%90%e9%96%8b%e5%82%ac%e7%99%ba%e8%a1%a8%e3%80%91the-3-union-is-strength-vol-4/'">大会概要 / Concept of the competetion</button>
+<button class="grey_button" onclick="location.href='/rules_the3'">大会ルール / Rules of the competetion</button>
+<div></div>
+<h2>リアルタイムリザルト</h2>
+<h3> DAY 1 (8/9) --- MIDDLE ---</h3>
+<button class="green_button" onclick="location.href='/mid_ranking'"> -- MIDDLE RANKING-- </button>
+<h3> DAY 2 (8/10) --- FUN & OPEN --- </h3>
+  <button class="yellow_button" onclick="location.href='/fun_ranking'"> -- FUN RANKING--</button>
+  <button class="red_button" onclick="location.href='/open_ranking'"> -- OPEN RANKING-- </button>
+<font size="2">The 3 JudgeSheet Assistant @ Powered by T4 and kaiz</font>
+</body>
 </html>

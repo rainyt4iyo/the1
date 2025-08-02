@@ -18,17 +18,20 @@
 </nav>
 
 <div class="container mt-4">
-
-  <button onclick="location.href='/funopen/judge/{{ area }}'">戻る / BACK</button>
-
     <h2>ジャッジエリア : {{ area }}</h2>
-    <h3>FUN / Team {{ team_number }} : {{ team_name }}</h3>
+    <h3>OPEN / Team {{ team_number }}: {{ team_name }}</h3>
 
-    <button class="button-onehand" onclick="location.href='/fun/judge/{{ area }}/team/{{ team_number }}/onehand'">片腕 / ONE HAND</button>
-    <button class="button-onefoot" onclick="location.href='/fun/judge/{{ area }}/team/{{ team_number }}/onefoot'">片足 / ONE FOOT</button>
+    {%if handorfoot=="onehand"%}
+      <h3> 片腕チャレンジ / One-Hand Challenge</h3>
+    {% endif %}
+    {%if handorfoot=="onefoot"%}
+      <h3> 片足チャレンジ / One-Foot Challenge</h3>
+    {% endif %}
 
-    <form action="/fun/judge/{{ area }}/team/{{ team_number }}" method="POST">
-        <table border="1">
+    <button class="button-onehand" onclick="location.href='/open/judge/{{ area }}/team/{{ team_number }}'"> back / 戻る </button>
+
+    <form action="/open/judge/{{ area }}/team/{{ team_number }}/{{handorfoot}}" method="POST">
+        <table class="onehandorfoot" border="1">
             <tr>
                 <th>名前</th>
                 {% for i in res %}
