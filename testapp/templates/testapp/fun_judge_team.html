@@ -8,27 +8,19 @@
     <title>ジャッジエリアA</title>
 </head>
 <body>
-<nav class="navbar">
-  <div class="nav-container">
-    <a href="/" class="nav-logo">THE 3</a>
-    <ul class="nav-menu">
-      <li><a href="/">ジャッジエリアA</a></li>
-    </ul>
-  </div>
-</nav>
 
 <div class="container mt-4">
 
   <button onclick="location.href='/funopen/judge/{{ area }}'">戻る / BACK</button>
 
-    <h2>ジャッジエリア : {{ area }}</h2>
+    <h2 class="heading-yellow">ジャッジエリア : {{ area }}</h2>
     <h3>FUN / Team {{ team_number }} : {{ team_name }}</h3>
 
     <button class="button-onehand" onclick="location.href='/fun/judge/{{ area }}/team/{{ team_number }}/onehand'">片腕 / ONE HAND</button>
     <button class="button-onefoot" onclick="location.href='/fun/judge/{{ area }}/team/{{ team_number }}/onefoot'">片足 / ONE FOOT</button>
 
     <form action="/fun/judge/{{ area }}/team/{{ team_number }}" method="POST">
-        <table border="1">
+        <table border="1" class="fun">
             <tr>
                 <th>名前</th>
                 {% for i in res %}
@@ -42,6 +34,8 @@
                     <td>
                       {% if (i,j) in checked_list %}
                         <input type="checkbox" name="check_{{ j }}_{{ i }}" value="1" checked>
+                      {% elif (i,j) in locked_list %}
+                        <input type="checkbox" name="check_{{ j }}_{{ i }}" value="1" checked disabled>
                       {% else %}
                         <input type="checkbox" name="check_{{ j }}_{{ i }}" value="1">
                       {% endif %}

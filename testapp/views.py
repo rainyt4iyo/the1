@@ -6,6 +6,14 @@ import pymysql
 def mainpage():
     return render_template('testapp/test.html')
 
+@app.route('/admin')
+def admin():
+    return render_template('testapp/admin.html')
+
+@app.route('/rules')
+def rules():
+    return render_template('testapp/rules.html')
+
 @app.route('/judge_lobby')
 def judge_lobby():
     return render_template('testapp/judge_lobby.html')
@@ -84,6 +92,8 @@ def fun_ranking():
         member_ids = [3 * i - 2, 3 * i - 1, 3 * i]
         members = [all_results.get(mid) for mid in member_ids]
         temp_pt = 0
+        send_list = []
+        send_sum = 0
 
         if None in members:
             continue
@@ -92,26 +102,29 @@ def fun_ranking():
             kadai_k = 'kadai_' + str(k)
             try:
                 values = [member[kadai_k] for member in members]
+                send_sum = send_sum + values.count(1) + values.count(2)
             except KeyError:
                 continue  
 
-            if all(v == 1 for v in values):
-                pt = kadai_points.get(k, 0)
-                temp_pt = temp_pt + pt
-
-            elif all(v == 2 for v in values):
+            if all(v == 2 for v in values):
                 pt = kadai_points.get(k, 0) + 5
                 temp_pt = temp_pt + pt
-
-        if '*' in team_name[i-1]:
-            temp_pt = temp_pt + 50 #ダイバーシティ加算'''
+                send_list.append(2)
+            elif all(v != 0 for v in values):
+                pt = kadai_points.get(k, 0)
+                temp_pt = temp_pt + pt
+                send_list.append(1)
+            else:
+                send_list.append(0)
         
-        team_point_list.append(temp_pt)
+        if '*' in team_name[i-1]:
+            temp_pt = temp_pt + 50
+
+        team_point_list.append((temp_pt, send_list, send_sum))
 
     for i in range(1,49):
         final_list.append((team_name[i-1],team_point_list[i-1]))
-    sorted_list = sorted(final_list, key=lambda x: x[1], reverse=True)
-    print(sorted_list)
+    sorted_list = sorted(final_list, key=lambda x: (x[1][0], x[1][2]), reverse=True)
         
     return render_template('testapp/fun_ranking.html', sorted_list=sorted_list)
 
@@ -145,6 +158,8 @@ def mid_ranking():
         member_ids = [3 * i - 2, 3 * i - 1, 3 * i]
         members = [all_results.get(mid) for mid in member_ids]
         temp_pt = 0
+        send_list = []
+        send_sum = 0
 
         if None in members:
             continue
@@ -153,24 +168,29 @@ def mid_ranking():
             kadai_k = 'kadai_' + str(k)
             try:
                 values = [member[kadai_k] for member in members]
+                send_sum = send_sum + values.count(1) + values.count(2)
             except KeyError:
                 continue  
-
-            if all(v == 1 for v in values):
-                pt = kadai_points.get(k, 0)
-                temp_pt = temp_pt + pt
-            elif all(v == 2 for v in values):
+            
+            if all(v == 2 for v in values):
                 pt = kadai_points.get(k, 0) + 5
                 temp_pt = temp_pt + pt
+                send_list.append(2)
+            elif all(v != 0 for v in values):
+                pt = kadai_points.get(k, 0)
+                temp_pt = temp_pt + pt
+                send_list.append(1)
+            else:
+                send_list.append(0)
         
         if '*' in team_name[i-1]:
             temp_pt = temp_pt + 50
 
-        team_point_list.append(temp_pt)
+        team_point_list.append((temp_pt, send_list, send_sum))
 
     for i in range(1,49):
         final_list.append((team_name[i-1],team_point_list[i-1]))
-    sorted_list = sorted(final_list, key=lambda x: x[1], reverse=True)
+    sorted_list = sorted(final_list, key=lambda x: (x[1][0], x[1][2]), reverse=True)
         
     return render_template('testapp/mid_ranking.html', sorted_list=sorted_list)
 
@@ -204,6 +224,8 @@ def open_ranking():
         member_ids = [3 * i - 2, 3 * i - 1, 3 * i]
         members = [all_results.get(mid) for mid in member_ids]
         temp_pt = 0
+        send_list = []
+        send_sum = 0
 
         if None in members:
             continue
@@ -212,26 +234,97 @@ def open_ranking():
             kadai_k = 'kadai_' + str(k)
             try:
                 values = [member[kadai_k] for member in members]
+                send_sum = send_sum + values.count(1) + values.count(2)
             except KeyError:
                 continue  
 
-            if all(v == 1 for v in values):
-                pt = kadai_points.get(k, 0)
-                temp_pt = temp_pt + pt
-            elif all(v == 2 for v in values):
+            if all(v == 2 for v in values):
                 pt = kadai_points.get(k, 0) + 5
                 temp_pt = temp_pt + pt
+                send_list.append(2)
+            elif all(v != 0 for v in values):
+                pt = kadai_points.get(k, 0)
+                temp_pt = temp_pt + pt
+                send_list.append(1)
+            else:
+                send_list.append(0)
         
         if '*' in team_name[i-1]:
             temp_pt = temp_pt + 50
-        team_point_list.append(temp_pt)
+
+        team_point_list.append((temp_pt, send_list, send_sum))
 
     for i in range(1,49):
-        final_list.append((team_name[i-1], team_point_list[i-1]))
-    sorted_list = sorted(final_list, key=lambda x: x[1], reverse=True)
-    print(sorted_list)
+        final_list.append((team_name[i-1],team_point_list[i-1]))
+    sorted_list = sorted(final_list, key=lambda x: (x[1][0], x[1][2]), reverse=True)
         
     return render_template('testapp/open_ranking.html', sorted_list=sorted_list)
+
+
+@app.route('/mid_output')
+def mid_output():
+    conn = pymysql.connect(host='localhost',
+                           user='t4',
+                           password='t4_password',
+                           database='myDB',
+                           cursorclass=pymysql.cursors.DictCursor)
+    cursor = conn.cursor()
+    
+    cursor.execute("SELECT * FROM mid_result")
+    all_results = {row['id']: row for row in cursor.fetchall()}
+
+    cursor.execute("SELECT id, point FROM mid_kadai")
+    kadai_points = {row['id']: row['point'] for row in cursor.fetchall()}
+
+    cursor.execute("SELECT id, team FROM mid_player")
+    teams = {row['id']: row['team'] for row in cursor.fetchall()}
+
+    conn.close()
+
+    team_name = [v for i, v in teams.items() if i is not None and (i - 1) % 3 == 0]
+
+    team_point_list = []
+    final_list = []
+
+    for i in range(1, 49):
+        member_ids = [3 * i - 2, 3 * i - 1, 3 * i]
+        members = [all_results.get(mid) for mid in member_ids]
+        temp_pt = 0
+        send_list = []
+        send_sum = 0
+
+        if None in members:
+            continue
+
+        for k in range(1, 31):
+            kadai_k = 'kadai_' + str(k)
+            try:
+                values = [member[kadai_k] for member in members]
+                send_sum = send_sum + values.count(1) + values.count(2)
+            except KeyError:
+                continue  
+            
+            if all(v == 2 for v in values):
+                pt = kadai_points.get(k, 0) + 5
+                temp_pt = temp_pt + pt
+                send_list.append(2)
+            elif all(v != 0 for v in values):
+                pt = kadai_points.get(k, 0)
+                temp_pt = temp_pt + pt
+                send_list.append(1)
+            else:
+                send_list.append(0)
+        
+        if '*' in team_name[i-1]:
+            temp_pt = temp_pt + 50
+
+        team_point_list.append((temp_pt, send_list, send_sum))
+
+    for i in range(1,49):
+        final_list.append((team_name[i-1],team_point_list[i-1]))
+    sorted_list = sorted(final_list, key=lambda x: (x[1][0], x[1][2]), reverse=True)
+        
+    return render_template('testapp/mid_output.html', sorted_list=sorted_list)
 
 
 @app.route('/mid/judge/<area>', methods=['GET'])
@@ -283,6 +376,7 @@ def judge_page(area, team_number):
         team_name = tn['team']
 
         checked_list = []
+        locked_list = []
         for r in res:
             for i in range(mins, maxs):
                 sql = '''SELECT kadai_%s FROM mid_result WHERE id = %s'''
@@ -290,6 +384,8 @@ def judge_page(area, team_number):
                 row = cursor.fetchone()
                 if row and row[f'kadai_{r}'] == 1:
                     checked_list.append((r,i))
+                elif row and row[f'kadai_{r}'] == 2:
+                    locked_list.append((r,i))
 
         conn.close()
         return render_template('testapp/mid_judge_team.html',
@@ -300,7 +396,8 @@ def judge_page(area, team_number):
                                res=res,
                                name=name,
                                team_name=team_name,
-                               checked_list=checked_list)
+                               checked_list=checked_list,
+                               locked_list=locked_list)
     
     if request.method == 'POST':
 
@@ -318,14 +415,21 @@ def judge_page(area, team_number):
             res = tuple(d['id'] for d in res)
             mins = 3*team_number-2
             maxs = 3*team_number+1
-            print(res, mins, maxs)
             conn.commit()
 
             for r in res:
                 for i in range(mins, maxs):
                     checked = request.form.get(f"check_{i}_{r}")
-                    value = 1 if checked else 0
-                    sql = f"UPDATE mid_result SET `kadai_{r}` = {value} WHERE id = {i}"
+                    sql = f"SELECT `kadai_{r}` from mid_result where id = {i}"
+                    cursor.execute(sql)
+                    data = cursor.fetchone()
+                    data = data['kadai_' + str(r)]
+                    if data != 2:
+                        value = 1 if checked else 0
+                        sql = f"UPDATE mid_result SET `kadai_{r}` = {value} WHERE id = {i}"
+                    else:
+                        value = 1 if checked else 2
+                        sql = f"UPDATE mid_result SET `kadai_{r}` = {value} WHERE id = {i}"
                     cursor.execute(sql)
                     conn.commit()
 
@@ -367,6 +471,7 @@ def judge_page_open(area, team_number):
         team_name = tn['team']
 
         checked_list = []
+        locked_list = []
         for r in res:
             for i in range(mins, maxs):
                 sql = '''SELECT kadai_%s FROM open_result WHERE id = %s'''
@@ -374,6 +479,8 @@ def judge_page_open(area, team_number):
                 row = cursor.fetchone()
                 if row and row[f'kadai_{r}'] == 1:
                     checked_list.append((r,i))
+                elif row and row[f'kadai_{r}'] == 2:
+                    locked_list.append((r,i))
 
         conn.close()
         return render_template('testapp/open_judge_team.html',
@@ -384,7 +491,8 @@ def judge_page_open(area, team_number):
                                res=res,
                                name=name,
                                team_name=team_name,
-                               checked_list=checked_list)
+                               checked_list=checked_list,
+                               locked_list=locked_list)
     
     if request.method == 'POST':
 
@@ -402,14 +510,21 @@ def judge_page_open(area, team_number):
             res = tuple(d['id'] for d in res)
             mins = 3*team_number-2
             maxs = 3*team_number+1
-            print(res, mins, maxs)
             conn.commit()
 
             for r in res:
                 for i in range(mins, maxs):
                     checked = request.form.get(f"check_{i}_{r}")
-                    value = 1 if checked else 0
-                    sql = f"UPDATE open_result SET `kadai_{r}` = {value} WHERE id = {i}"
+                    sql = f"SELECT `kadai_{r}` from open_result where id = {i}"
+                    cursor.execute(sql)
+                    data = cursor.fetchone()
+                    data = data['kadai_' + str(r)]
+                    if data != 2:
+                        value = 1 if checked else 0
+                        sql = f"UPDATE open_result SET `kadai_{r}` = {value} WHERE id = {i}"
+                    else:
+                        value = 1 if checked else 2
+                        sql = f"UPDATE open_result SET `kadai_{r}` = {value} WHERE id = {i}"
                     cursor.execute(sql)
                     conn.commit()
 
@@ -451,6 +566,7 @@ def judge_page_fun(area, team_number):
         team_name = tn['team']
 
         checked_list = []
+        locked_list = []
         for r in res:
             for i in range(mins, maxs):
                 sql = '''SELECT kadai_%s FROM fun_result WHERE id = %s'''
@@ -458,6 +574,8 @@ def judge_page_fun(area, team_number):
                 row = cursor.fetchone()
                 if row and row[f'kadai_{r}'] == 1:
                     checked_list.append((r,i))
+                elif row and row[f'kadai_{r}'] == 2:
+                    locked_list.append((r,i))
 
         conn.close()
         return render_template('testapp/fun_judge_team.html',
@@ -468,7 +586,8 @@ def judge_page_fun(area, team_number):
                                res=res,
                                name=name,
                                team_name=team_name,
-                               checked_list=checked_list)
+                               checked_list=checked_list,
+                               locked_list=locked_list)
     
     if request.method == 'POST':
 
@@ -486,14 +605,21 @@ def judge_page_fun(area, team_number):
             res = tuple(d['id'] for d in res)
             mins = 3*team_number-2
             maxs = 3*team_number+1
-            print(res, mins, maxs)
             conn.commit()
 
             for r in res:
                 for i in range(mins, maxs):
                     checked = request.form.get(f"check_{i}_{r}")
-                    value = 1 if checked else 0
-                    sql = f"UPDATE fun_result SET `kadai_{r}` = {value} WHERE id = {i}"
+                    sql = f"SELECT `kadai_{r}` from fun_result where id = {i}"
+                    cursor.execute(sql)
+                    data = cursor.fetchone()
+                    data = data['kadai_' + str(r)]
+                    if data != 2:
+                        value = 1 if checked else 0
+                        sql = f"UPDATE fun_result SET `kadai_{r}` = {value} WHERE id = {i}"
+                    else:
+                        value = 1 if checked else 2
+                        sql = f"UPDATE fun_result SET `kadai_{r}` = {value} WHERE id = {i}"
                     cursor.execute(sql)
                     conn.commit()
 
@@ -577,8 +703,16 @@ def judge_page_special(area, team_number, handorfoot):
             for r in res:
                 for i in range(mins, maxs):
                     checked = request.form.get(f"check_{i}_{r}")
-                    value = 2 if checked else 0
-                    sql = f"UPDATE mid_result SET `kadai_{r}` = {value} WHERE id = {i}"
+                    sql = f"SELECT `kadai_{r}` from mid_result where id = {i}"
+                    cursor.execute(sql)
+                    data = cursor.fetchone()
+                    data = data['kadai_' + str(r)]
+                    if data != 1:
+                        value = 2 if checked else 0
+                        sql = f"UPDATE mid_result SET `kadai_{r}` = {value} WHERE id = {i}"
+                    else:
+                        value = 2 if checked else 1
+                        sql = f"UPDATE mid_result SET `kadai_{r}` = {value} WHERE id = {i}"
                     cursor.execute(sql)
                     conn.commit()
 
@@ -660,8 +794,16 @@ def judge_page_special_fun(area, team_number, handorfoot):
             for r in res:
                 for i in range(mins, maxs):
                     checked = request.form.get(f"check_{i}_{r}")
-                    value = 2 if checked else 0
-                    sql = f"UPDATE fun_result SET `kadai_{r}` = {value} WHERE id = {i}"
+                    sql = f"SELECT `kadai_{r}` from fun_result where id = {i}"
+                    cursor.execute(sql)
+                    data = cursor.fetchone()
+                    data = data['kadai_' + str(r)]
+                    if data != 1:
+                        value = 2 if checked else 0
+                        sql = f"UPDATE fun_result SET `kadai_{r}` = {value} WHERE id = {i}"
+                    else:
+                        value = 2 if checked else 1
+                        sql = f"UPDATE fun_result SET `kadai_{r}` = {value} WHERE id = {i}"
                     cursor.execute(sql)
                     conn.commit()
 
@@ -743,8 +885,16 @@ def judge_page_special_open(area, team_number, handorfoot):
             for r in res:
                 for i in range(mins, maxs):
                     checked = request.form.get(f"check_{i}_{r}")
-                    value = 2 if checked else 0
-                    sql = f"UPDATE open_result SET `kadai_{r}` = {value} WHERE id = {i}"
+                    sql = f"SELECT `kadai_{r}` from open_result where id = {i}"
+                    cursor.execute(sql)
+                    data = cursor.fetchone()
+                    data = data['kadai_' + str(r)]
+                    if data != 1:
+                        value = 2 if checked else 0
+                        sql = f"UPDATE open_result SET `kadai_{r}` = {value} WHERE id = {i}"
+                    else:
+                        value = 2 if checked else 1
+                        sql = f"UPDATE open_result SET `kadai_{r}` = {value} WHERE id = {i}"
                     cursor.execute(sql)
                     conn.commit()
 

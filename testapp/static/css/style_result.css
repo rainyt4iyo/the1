@@ -10,9 +10,11 @@ body {
 }
 
 .container {
-    max-width: 900px;
+    max-width: 100vw;  /* ← 900px から変更 */
+    width: 100%;
     margin: 0 auto;
     padding: 20px;
+    box-sizing: border-box;
 }
 
 h2 {
@@ -34,7 +36,7 @@ h2::after {
 
 /* テーブル共通 */
 table {
-    width: 100%;
+    margin: auto;
     border-collapse: collapse;
     background: white;
     box-shadow: 0 4px 12px rgba(0,0,0,0.1);
@@ -91,21 +93,6 @@ body.open-theme h2::after {
     background: #e74c3c;
 }
 
-/* レスポンシブ */
-@media (max-width: 600px) {
-    table {
-        font-size: 0.9rem;
-    }
-
-    table th, table td {
-        padding: 10px 8px;
-    }
-
-    .container {
-        padding: 10px;
-        overflow-x: auto;
-    }
-}
 
 @keyframes fadeIn {
     from { opacity: 0; transform: translateY(10px); }
@@ -273,18 +260,12 @@ input[type="radio"].lime:checked {
 .radio-row {
     display: flex;
     flex-wrap: wrap;
-    gap: 8px;
+    gap: 6px;
     justify-content: flex-start;
     align-items: flex-start;
     margin-top: 15px;
 }
 
-.radio-item {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    min-width: 30px;
-}
 
 .radio-item div {
     font-size: 12px;
@@ -293,6 +274,7 @@ input[type="radio"].lime:checked {
     text-align: center;
     color: #333;
 }
+
 
 .radio-item input[type="radio"] {
     width: 16px;
@@ -309,41 +291,36 @@ input[type="radio"].lime:checked {
     accent-color: #44ff44;
 }
 
-/* より小さい画面での調整 */
-@media (max-width: 768px) {
-    .radio-row {
-        gap: 6px;
-    }
-    
-    .radio-item {
-        min-width: 25px;
-    }
-    
-    .radio-item div {
-        font-size: 11px;
-    }
-    
-    .radio-item input[type="radio"] {
-        width: 14px;
-        height: 14px;
-    }
+.leftup {
+    position: absolute;
+    top: 80px;
+    left: 400px;
+    width: auto;         /* ロゴサイズ調整、必要に応じて変更 */
+    height: 160px;
+    z-index: 999;
+    border-radius: 10px;
 }
 
-/* さらに小さい画面での調整 */
-@media (max-width: 480px) {
-    .radio-row {
-        gap: 4px;
-    }
-    
-    .radio-item {
-        min-width: 22px;
-    }
-    
-    .radio-item div {
-        font-size: 10px;
-    }
-    
-    .radio-item input[type="radio"] {
-        width: 12px;
-        height: 12px;
-    }}
+@media print {
+  .leftup {
+    position: static !important;  /* 絶対位置指定を解除 */
+    margin: 0 auto;               /* 中央寄せ */
+    display: block;
+    height: 160px;
+    width: auto;
+    border-radius: 10px;
+    z-index: auto;
+    top: auto;
+    left: auto;
+  }
+}
+
+h1 {
+    font-family: 'Helvetica Neue', Arial, sans-serif;
+    font-weight: 700;
+    position: relative;
+    display: inline-block;
+    padding: 0.5em 1em;
+    margin: 20px auto;
+    color: #fc67a5;
+}
