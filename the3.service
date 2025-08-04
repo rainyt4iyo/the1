@@ -3,7 +3,7 @@ Description=The3 Flask Application
 After=network.target
 
 [Service]
-User=the3
+User=gyate
 WorkingDirectory=/home/gyate/the3
 Environment="PATH=/home/gyate/venv"
 ExecStart=/home/gyate/venv/binpython server.py
