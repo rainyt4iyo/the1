@@ -1,0 +1,13 @@
+[Unit]
+Description=The3 Flask Application
+After=network.target
+
+[Service]
+User=the3
+WorkingDirectory=/home/gyate/the3
+Environment="PATH=/home/gyate/venv"
+ExecStart=/home/gyate/venv/binpython server.py
+Restart=always
+
+[Install]
+WantedBy=multi-user.target
