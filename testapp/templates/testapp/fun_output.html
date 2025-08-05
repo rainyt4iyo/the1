@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/style_result.css') }}"/>
+    <title>FUN CURRENT RANKING</title>
+</head>
+<body class="middle-theme">
+    <div class="container mt-4">
+    <img class="leftup" src="/static/images/the3_logo.jpg">
+    <br>
+    <h2>[FUN] 予選リザルト / Qualifying Round RESULT</h2>
+    <div>
+        <br>
+        <input type="radio" class="lime" checked disabled> : 完登 
+        <br>
+        <input type="radio" class="pink" checked disabled> : 片腕 / 片足チャレンジ (+5pt)
+        <br>
+        <div>
+            *ダイバーシティチーム (+50pt)
+        </div>
+    </div>
+        <table>
+            <thead>
+                <tr>
+                    <th>RANK</th>
+                    <th class="team-column">チーム</th>
+                    <th>ポイント</th>
+                    <th>チーム完登課題</th>
+                    <th>メンバー完登数</th>
+                </tr>
+            </thead>
+            {% for i in range(1,49) %}
+            <tr>
+                <th>{{ i }}</td> 
+                <td class="team-column">{{ sorted_list[i-1][0] }}</td> 
+                <td>{{ sorted_list[i-1][1][0] }}</td>
+                <td>
+                    <div class="radio-row">
+                        {% for j in range(1,31) %}
+                        <div class="radio-item">
+                            <div>{{ j }}</div>
+                                {% if sorted_list[i-1][1][1][j-1]  == 2 %}
+                                    <input type="radio" class="pink" checked disabled>
+                                {% elif sorted_list[i-1][1][1][j-1] == 1 %}
+                                    <input type="radio" class="lime" checked disabled>
+                                {% else %}
+                                    <input type="radio" disabled>
+                                {% endif %}
+                            </div>
+                                {% endfor %}
+                        </div>
+                    </div>
+                </td>
+                <td>
+                    {{ sorted_list[i-1][1][2] }}
+                </td>
+            </tr>
+            {% endfor %}
+        </table>
+    </div>
+
+    <font size="2">The 3 JudgeSheet Assistant @ Powered by T4 and kaiz</font>
+</body>
+</html>
