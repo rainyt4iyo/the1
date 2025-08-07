@@ -9,7 +9,6 @@
 table {
   border-collapse: collapse;
   width: 100%;
-  min-width: 2000px; /* 横幅大きめにとる */
   table-layout: fixed; /* セル幅を固定 */
   font-family: Arial, sans-serif;
   font-size: 10px; /* 小さめにして情報量を増やす */
@@ -27,7 +26,7 @@ thead tr {
 /* ヘッダーセル */
 th {
   border: 1px solid #999;
-  padding: 4px 6px;
+  padding: 2px 4px;
   text-align: center;
   white-space: nowrap;
   font-weight: bold;
@@ -36,7 +35,7 @@ th {
 /* データセル */
 td {
   border: 1px solid #ccc;
-  padding: 3px 5px;
+  padding: 1px 3px;
   text-align: center;
   white-space: nowrap;
   overflow: hidden;
