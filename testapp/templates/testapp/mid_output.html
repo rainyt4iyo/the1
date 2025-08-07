@@ -9,7 +9,6 @@
 </head>
 <body class="middle-theme">
     <div class="container mt-4">
-    <img class="leftup" src="/static/images/the3_logo.jpg">
     <br>
     <h2>[MIDDLE] 予選リザルト / Qualifying Round RESULT</h2>
     <div>
@@ -28,15 +27,18 @@
                     <th>RANK</th>
                     <th class="team-column">チーム</th>
                     <th>ポイント</th>
-                    <th>チーム完登課題</th>
                     <th>メンバー完登数</th>
+                    <th>チーム完登課題</th>
                 </tr>
             </thead>
             {% for i in range(1,49) %}
             <tr>
-                <th>{{ i }}</td> 
+                <th>{{ i }}</th> 
                 <td class="team-column">{{ sorted_list[i-1][0] }}</td> 
                 <td>{{ sorted_list[i-1][1][0] }}</td>
+                <td>
+                    {{ sorted_list[i-1][1][2] }}
+                </td>
                 <td>
                     <div class="radio-row">
                         {% for j in range(1,31) %}
@@ -53,9 +55,6 @@
                                 {% endfor %}
                         </div>
                     </div>
-                </td>
-                <td>
-                    {{ sorted_list[i-1][1][2] }}
                 </td>
             </tr>
             {% endfor %}

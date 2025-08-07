@@ -316,6 +316,7 @@ def judge_page(category, area, team_number):
                             cursor.execute(sql, (r, value, i))
                         
                         conn.commit()
+                        print(f"[UPDATED] {category}-{area}-{team_number}: {updates}")
                         
                 except Exception as e:
                     conn.rollback()
@@ -330,6 +331,7 @@ def judge_page(category, area, team_number):
             return redirect(url_for('judge_area', area=area))
         else:
             return redirect(url_for('judge_area_fo', area=area))
+        
 
 
 @app.route('/<category>/judge/<area>/team/<int:team_number>/<handorfoot>', methods=['GET','POST'])
@@ -434,6 +436,7 @@ def judge_page_special(category, area, team_number, handorfoot):
                             cursor.execute(sql, (r, value, i))
                         
                         conn.commit()
+                        print(f"[UPDATED] ONEHAND / ONEFOOT * {category}-{area}-{team_number}: {updates}")
                         
                 except Exception as e:
                     conn.rollback()

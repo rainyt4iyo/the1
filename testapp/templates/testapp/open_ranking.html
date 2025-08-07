@@ -15,7 +15,8 @@
                 <tr>
                     <th>RANK</th>
                     <th class="team-column">TEAM</th>
-                    <th>POINT</th>
+                    <th>ポイント</th>
+                    <th>完登数</th>
                     <th>詳細</th>
                 </tr>
             </thead>
@@ -24,6 +25,7 @@
                 <th>{{ i }}</td> 
                 <td class="team-column">{{ sorted_list[i-1][0] }}</td> 
                 <td>{{ sorted_list[i-1][1][0] }}</td>
+                <td>{{ sorted_list[i-1][1][2] }}</td>
                 <td>
                     <div class="button-container">
                         <label class="button-sample1" for="popupFlag{{ i }}">View</label>
