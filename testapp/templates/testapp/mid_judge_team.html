@@ -28,11 +28,10 @@
                     <th>No.{{ i }}</th>
                 {% endfor %}
             </tr>
-            {% k=1 %}
+            {% k = 1 %}
             {% for j in range(min, max) %}
             <tr>
                 <td>{{ k }}</td>
-                {% k = k + 1 %}
                 <td>{{ name[j-min] }}</td>
                 {% for i in res %}
                     <td>
