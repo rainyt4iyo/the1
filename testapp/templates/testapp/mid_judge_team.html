@@ -22,13 +22,17 @@
     <form action="/mid/judge/{{ area }}/team/{{ team_number }}" method="POST">
         <table border="1" class="mid">
             <tr>
-                <th>名前</th>
+              <th>番号</th>
+              <th>名前</th>
                 {% for i in res %}
                     <th>No.{{ i }}</th>
                 {% endfor %}
             </tr>
+            {% k=1 %}
             {% for j in range(min, max) %}
             <tr>
+                <td>{{ k }}</td>
+                {% k = k + 1 %}
                 <td>{{ name[j-min] }}</td>
                 {% for i in res %}
                     <td>
