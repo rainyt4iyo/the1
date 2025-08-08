@@ -25,6 +25,7 @@
     <form action="/fun/judge/{{ area }}/team/{{ team_number }}/{{handorfoot}}" method="POST">
         <table class="onehandorfoot" border="1">
             <tr>
+              <th>番号</th>
                 <th>名前</th>
                 {% for i in res %}
                     <th>No.{{ i }}</th>
@@ -32,7 +33,8 @@
             </tr>
             {% for j in range(min, max) %}
             <tr>
-                <td>{{ name[j-min] }}</td>
+              <td>{{ loop.index }}</td>
+              <td>{{ name[j-min] }}</td>
                 {% for i in res %}
                     <td>
                       {% if (i,j) in checked_list %}
