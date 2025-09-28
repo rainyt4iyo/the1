@@ -190,20 +190,10 @@ def calculate_ranking(category):
     
     return execute_with_retry(fetch_and_calculate)
 
-@app.route('/fun_ranking')
-def fun_ranking():
-    sorted_list = calculate_ranking('fun')
-    return render_template('testapp/fun_ranking.html', sorted_list=sorted_list)
-
-@app.route('/mid_ranking')
-def mid_ranking():
-    sorted_list = calculate_ranking('mid')
-    return render_template('testapp/mid_ranking.html', sorted_list=sorted_list)
-
-@app.route('/open_ranking')
-def open_ranking():
-    sorted_list = calculate_ranking('open')
-    return render_template('testapp/open_ranking.html', sorted_list=sorted_list)
+@app.route('/ranking/<category>')
+def fun_ranking(category):
+    sorted_list = calculate_ranking(category)
+    return render_template('testapp/ranking.html', sorted_list=sorted_list, category=category)
 
 @app.route('/fun_output')
 def fun_output():
