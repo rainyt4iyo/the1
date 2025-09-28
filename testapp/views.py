@@ -97,38 +97,17 @@ def fetch_player_data(category):
     
     return execute_with_retry(fetch_data)
 
-@app.route('/process_fun')
+@app.route('/process/<category>')
 def process_fun():
-    data = fetch_process_data('fun')
-    player = fetch_player_data('fun')
+    data = fetch_process_data(category)
+    player = fetch_player_data(category)
     for i in data:
         ids = i['id']
         for j in player:
             if ids == j['id']:
                 i['player'] = j['player']
-    return render_template('testapp/process_fun.html', data=data)
+    return render_template('testapp/process.html', data=data, category=category)
 
-@app.route('/process_mid')
-def process_mid():
-    data = fetch_process_data('mid')
-    player = fetch_player_data('mid')
-    for i in data:
-        ids = i['id']
-        for j in player:
-            if ids == j['id']:
-                i['player'] = j['player']
-    return render_template('testapp/process_mid.html', data=data)
-
-@app.route('/process_open')
-def process_open():
-    data = fetch_process_data('open')
-    player = fetch_player_data('open')
-    for i in data:
-        ids = i['id']
-        for j in player:
-            if ids == j['id']:
-                i['player'] = j['player']
-    return render_template('testapp/process_open.html', data=data)
 
 def calculate_ranking(category):
     """ランキング計算の共通関数"""
