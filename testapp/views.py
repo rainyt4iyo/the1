@@ -98,7 +98,7 @@ def fetch_player_data(category):
     return execute_with_retry(fetch_data)
 
 @app.route('/process/<category>')
-def process_fun():
+def process_fun(category):
     data = fetch_process_data(category)
     player = fetch_player_data(category)
     for i in data:
@@ -174,21 +174,10 @@ def fun_ranking(category):
     sorted_list = calculate_ranking(category)
     return render_template('testapp/ranking.html', sorted_list=sorted_list, category=category)
 
-@app.route('/fun_output')
-def fun_output():
-    sorted_list = calculate_ranking('fun')
-    return render_template('testapp/fun_output.html', sorted_list=sorted_list)
-
-@app.route('/mid_output')
-def mid_output():
-    sorted_list = calculate_ranking('mid')
-    return render_template('testapp/mid_output.html', sorted_list=sorted_list)
-
-@app.route('/open_output')
-def open_output():
-    sorted_list = calculate_ranking('open')
-    return render_template('testapp/open_output.html', sorted_list=sorted_list)
-
+@app.route('/output/category')
+def fun_output(category):
+    sorted_list = calculate_ranking(category)
+    return render_template('testapp/output.html', sorted_list=sorted_list, category=category)
 
 @app.route('/mid/judge/<area>', methods=['GET'])
 def judge_area(area):
