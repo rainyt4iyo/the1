@@ -12,9 +12,11 @@
 
 <div class="container mt-4">
 
-  <button onclick="location.href='/judge/{{ category }}/{{ problem }}'">戻る / BACK</button>
+  <button class="black_button" onclick="location.href='/judge/{{ category }}/{{ problem }}'">戻る / BACK</button>
   
     <h3 class="heading-green">Info : {{ cat_name }}, {{ problem }}</h3>
+
+    <h1>No.{{ player_number }} : {{ player_name }}</h1>
 
     <form action="/judge/{{ category }}/{{ problem }}/{{ player_number }}" method="POST">
         <table border="1">
@@ -23,14 +25,14 @@
                 <th>TOP</th>
             </tr>
             <tr>
-                <td>
+                <td class="checkbox-td">
                     {% if zonegot == 0%}
                     <input type="checkbox" name="zone">
                     {% else %}
                     <input type="checkbox" name="zone" checked>
                     {% endif %}
                 </td>
-                <td>
+                <td class="checkbox-td">
                     {% if topgot == 0%}
                     <input type="checkbox" name="top">
                     {% else %}
@@ -68,7 +70,7 @@
             </tr>
         </table>
         <br>
-        <button type="submit">送信 / Submit</button>
+        <button class="yellow_button" type="submit">送信 / Submit</button>
     </form>
 </div>
 

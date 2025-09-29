@@ -98,6 +98,8 @@ def judgefeed(category, problem, player_number):
         finally:
             conn.close()
 
+        print(playerdata)
+
         player_name = playerdata['player']
 
         if problem == "p1":
@@ -113,9 +115,14 @@ def judgefeed(category, problem, player_number):
             zonegot = playerdata['z4']
             topgot = playerdata['t4']
 
-        return render_template('testapp/judgefeed.html', category=category, 
+        if zonegot == None:
+            zonegot = 0
+        if topgot == None:
+            topgot = 0
+
+        return render_template('testapp/judgefeed.html',category=category, 
                                                         problem=problem, 
-                                                        player=player_name, 
+                                                        player_name=player_name, 
                                                         player_number=player_number, 
                                                         cat_name=cat_name,
                                                         zonegot=zonegot,

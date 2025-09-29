@@ -75,7 +75,7 @@ button {
   border: none;
   border-radius: 12px;
   cursor: pointer;
-  box-shadow: 0 6px 12px rgba(0,0,0,0.1);
+  box-shadow: 0 6px 12px rgba(255, 255, 255, 0.1);
   transition: all 0.2s ease-in-out;
   position: relative;
   overflow: hidden;
@@ -104,13 +104,18 @@ button:hover {
 }
 
 .white_button {
-  background-color: #3a3c4b;
-  color: #ffffff;
+  background-color: #ffffff;
+  color: #000000;
 }
 
 .black_button {
-  background: #3a3c4b;
+  background: #5b5e70;
   color: #ffffff;
+}
+
+.yellow_button {
+  background: #fff237;
+  color: #000000;
 }
 
 /* テーブル */
@@ -137,6 +142,8 @@ table th, table td {
   text-align: center;
   border: 1px solid #535458;
   font-size: 1rem;
+  text-align: center;      /* 横方向の中央揃え */
+  vertical-align: middle;  /* 縦方向の中央揃え */
 }
 
 table tbody tr:nth-child(even) {
@@ -181,16 +188,16 @@ table tbody tr:nth-child(even) {
     width: 60%;
     height: 2.8em;
     padding: 0.4em 2.5em 0.4em 0.8em; /* 右側に矢印分の余白 */
-    border: 2px solid #2589d0;
+    border: 2px solid #fffc3d;
     border-radius: 4px;
-    font-size: 2em;
+    font-size: 1.5em;
     color: #333;
-    background-color: #fff;
+    background-color: #ffffff;
     cursor: pointer;
 }
 
 .selectbox-2 select:focus {
-    outline: 2px solid #2589d0;
+    outline: 2px solid #fff45c;
 }
 
 /* ::before は削除してゴミ防止 */
@@ -202,11 +209,18 @@ table tbody tr:nth-child(even) {
 input[type="checkbox"] {
   width: calc(100% - 4px);
   height: calc(100% - 4px);
-  min-width: 100px;
-  min-height: 100px;
-  max-width: 200px;
-  max-height: 200px;
+  width: 100px;
+  height: 100px;
   cursor: pointer;
   margin: 2px;
-  accent-color: #fcff41;
+  background-color: #ffffff;
+  accent-color: #fff457;
+  color: black
+  border-radius: 1px;
+  margin: auto; 
+}
+
+input[type="checkbox"] {
+  display: block;
+  margin: auto;  /* 横方向も縦方向もセル中央に寄る */
 }
