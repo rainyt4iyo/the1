@@ -10,10 +10,21 @@
 </head>
 <body>
   <div class="container">
-    <h1> リアルタイムリザルト / Current Ranking</h1> 
+    <h1> 出場選手一覧 / Competitors List</h1> 
     <br>
-    <h2>  THE|1 - {{category}} - </h2>
+    <h2> {{category}}</h2> 
     <br>
+    <table>
+      <thead>
+        <th>番号 / No.</th>
+        <th>選手名 / Name</th>
+      </thead>
+      {% for player in listed %}
+      <tr>
+        <td>{{ player.id }}</td>
+        <td>{{ player.player }}</td>
+      </tr>
+      {% endfor %}
     <p size="2">The 1 JudgeSheet Assistant @ T4 and kaiz</p>
   </div>
 </body>

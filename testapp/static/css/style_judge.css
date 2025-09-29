@@ -123,12 +123,13 @@ table {
   border-radius: 8px;
   overflow: hidden;
   border: 2px solid #8d8d8d;
+  font-weight: bolder;
 }
 
 table thead {
   background-color: #0f0f0f;
   color: white;
-  font-weight: bold;
+  font-weight: bolder;
 }
 
 table th, table td {
@@ -142,9 +143,70 @@ table tbody tr:nth-child(even) {
   background-color: #2f3136;
 }
 
+
+
 /* レスポンシブ */
 @media (min-width: 600px) {
   h1 { font-size: 2.2rem; }
   h2 { font-size: 1.6rem; }
   button { font-size: 1.1rem; }
+}
+
+.selectbox-2 {
+    position: relative;
+    display: inline-block;  /* ここが重要 */
+    width: 100%;            /* 親幅に合わせる */
+    max-width: 250px;       /* 任意で調整 */
+}
+
+/* 矢印用疑似要素 */
+.selectbox-2::after {
+    content: '';
+    position: absolute;
+    top: 50%;
+    right: 0.8em;          /* 右端から少し内側 */
+    transform: translateY(-50%) rotate(45deg);
+    width: 6px;
+    height: 6px;
+    border-bottom: 2px solid #fff;
+    border-right: 2px solid #fff;
+    pointer-events: none;  /* 矢印はクリック対象にならない */
+}
+
+/* select自体のスタイル */
+.selectbox-2 select {
+    appearance: none;
+    -webkit-appearance: none;
+    -moz-appearance: none;
+    width: 60%;
+    height: 2.8em;
+    padding: 0.4em 2.5em 0.4em 0.8em; /* 右側に矢印分の余白 */
+    border: 2px solid #2589d0;
+    border-radius: 4px;
+    font-size: 2em;
+    color: #333;
+    background-color: #fff;
+    cursor: pointer;
+}
+
+.selectbox-2 select:focus {
+    outline: 2px solid #2589d0;
+}
+
+/* ::before は削除してゴミ防止 */
+.selectbox-2::before {
+    display: none;
+}
+
+
+input[type="checkbox"] {
+  width: calc(100% - 4px);
+  height: calc(100% - 4px);
+  min-width: 100px;
+  min-height: 100px;
+  max-width: 200px;
+  max-height: 200px;
+  cursor: pointer;
+  margin: 2px;
+  accent-color: #fcff41;
 }
