@@ -1,349 +1,167 @@
-/* 共通スタイル */
+/* すべての要素にbox-sizingを適用 */
+*, *::before, *::after {
+  box-sizing: border-box;
+}
+
+/* 画面全体の基本スタイル */
+html, body {
+  margin: 0;
+  padding: 0;
+  overflow-x: hidden;
+  font-family: 'メイリオ', 'Meiryo', 'Helvetica Neue', Arial, sans-serif;
+  background: linear-gradient(135deg, #24252e, #000000);
+  color: #0a0a0a;
+  text-align: center;
+}
+
+/* コンテンツラッパー */
+.container {
+  max-width: 900px;
+  margin: 0 auto;
+  padding: 20px;
+  animation: fadeIn 0.6s ease-in-out;
+}
+
+/* フェードイン */
+@keyframes fadeIn {
+  from { opacity: 0; transform: translateY(10px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+/* ヘッダー画像 */
+.header {
+  max-width: 100%;
+  height: auto;
+  display: block;
+  margin: 0 auto 1rem;
+  border-radius: 12px;
+  box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+}
+
+/* 見出し */
+h1, h2 {
+  margin: 1rem 0 0.5rem;
+  position: relative;
+  font-family: 'Ubuntu Mono', monospace;
+}
+h1 { font-size: 1.8rem; }
+h2 { font-size: 1.2rem; color: #ffffff; }
+
+h1::after, h2::after {
+  content: '';
+  display: block;
+  width: 30px;
+  height: 3px;
+  background: #fff783;
+  margin: 0.5rem auto 0;
+  border-radius: 2px;
+}
+
+h3 {
+  font-size: 1.1rem;
+  margin-top: 1.4rem;
+  color: #e9e9e9;
+}
 body {
-    font-family: 'Helvetica Neue', Arial, sans-serif;
-    margin: 0;
-    padding: 20px;
-    background: #fdfdfd;
-    color: #333;
-    text-align: center;
-    animation: fadeIn 0.6s ease-in-out;
+  font-family: Arial, sans-serif;
+  background-color: #f5f5f5;
+  margin: 0;
+  padding: 20px;
 }
 
 .container {
-    max-width: 900px;
-    margin: 0 auto;
-    padding: 20px;
+  max-width: 1200px;
+  margin: 0 auto;
+  background-color: white;
+  padding: 30px;
+  border-radius: 8px;
+  box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+}
+
+h1 {
+  text-align: center;
+  color: #333;
+  margin-bottom: 10px;
 }
 
 h2 {
-    font-size: 1.5rem;
-    margin-bottom: 10px;
-    position: relative;
-    text-align: center;
+  text-align: center;
+  color: #666;
+  margin-bottom: 20px;
 }
 
-h2::after {
-    content: '';
-    display: block;
-    width: 60px;
-    height: 3px;
-    background: currentColor;
-    margin: 0.5rem auto 0;
-    border-radius: 2px;
-}
-
-/* テーブル共通 */
 table {
-    width: 100%;
-    border-collapse: collapse;
-    background: white;
-    box-shadow: 0 4px 12px rgba(0,0,0,0.1);
-    border-radius: 12px;
-    overflow: hidden;
-    margin-top: 20px;
-    font-size: 1rem;
-    border: 1px solid #ccc;
+  width: 100%;
+  border-collapse: collapse;
+  margin-top: 20px;
 }
 
-table th, table td {
-    padding: 12px 15px;
-    text-align: center;
-    border: 1px solid #ddd;
+table tr {
+  border-bottom: 1px solid #ddd;
 }
 
-.team-column {
-    text-align: center;
+table td {
+  padding: 15px 10px;
+  text-align: center;
 }
 
-table tbody tr:nth-child(even) {
-    background-color: #f9f9f9;
+table tr:first-child {
+  background-color: #333;
+  color: white;
+  font-weight: bold;
 }
 
-table tbody tr:hover {
-    background-color: #f0f0f0;
-    transition: background-color 0.3s ease;
+table tr:first-child td {
+  padding: 12px 10px;
 }
 
-/* テーマ色：ヘッダー背景 */
-body.fun-theme thead {
-    background-color: #f4c542;
-    color: white;
+table tr:hover:not(:first-child) {
+  background-color: #f9f9f9;
 }
 
-body.middle-theme thead {
-    background-color: #4CAF50;
-    color: white;
+/* ラジオボタンのスタイリング */
+input[type="radio"] {
+  appearance: none;
+  -webkit-appearance: none;
+  -moz-appearance: none;
+  width: 15px;
+  height: 15px;
+  border: 2px solid #999;
+  background-color: #ddd;
+  cursor: not-allowed;
+  margin: 0;
+  padding: 0;
+  display: block;
 }
 
-body.open-theme thead {
-    background-color: #e74c3c;
-    color: white;
+input[type="radio"]:checked {
+  background-color: #75dfff;
+  border-color: #29cdff;
 }
 
-/* テーマ色：見出し下線 */
-body.fun-theme h2::after {
-    background: #f4c542;
-}
-body.middle-theme h2::after {
-    background: #4CAF50;
-}
-body.open-theme h2::after {
-    background: #e74c3c;
-}
-
-/* レスポンシブ */
-@media (max-width: 600px) {
-    table {
-        font-size: 0.9rem;
-    }
-
-    table th, table td {
-        padding: 10px 8px;
-    }
-
-    .container {
-        padding: 10px;
-        overflow-x: auto;
-    }
-}
-
-@keyframes fadeIn {
-    from { opacity: 0; transform: translateY(10px); }
-    to { opacity: 1; transform: translateY(0); }
-}
-
-
-.popup-background{
-  /*position size*/
-  position: fixed;
-  z-index : 100;
-  top : 0;
-  left : 0;
-  height : 100vh;
-  width : 100vw;
-
-  /*design*/
-  background-color: gray;
-  opacity : 0.5
-}
-.popup{
-  /*position size*/
-  --height : 600px;
-  --width : 300px;
-  z-index : 101;
-  position: fixed;
-  top : calc(50vh - calc(var(--height) / 2));
-  left : calc(50vw - calc(var(--width) / 2));
-  height : var(--height);
-  width : var(--width);
-
-  /*design*/
-  overflow : hidden;
-  background-color: white;
-  border-radius: 10px;
-  box-shadow: 0px 0px 3px 1px gray;
-}
-.popup > .close-button{
-  /*position size*/
-  --size : 20px;
-  position:absolute;
-  top : calc(var(--size)/4);
-  left : calc(var(--width) - var(--size) * 5/4);/*css variables are available in children*/
-  height : var(--size);
-  width : var(--size);
-
-  /*design*/
+/* ラジオボタンコンテナ（横並び） */
+.radio-container {
   display: flex;
   justify-content: center;
   align-items: center;
-  background-color: transparent;
-  color : gray;
-  font-size: var(--size);
-  border-radius: calc(var(--size)/5);
-}
-.popup > .close-button:hover{
-  /*design*/
-  background-color: red;
-  color : white;
-}
-.popup > .content{
-  padding: 10px;
-  text-align: center;
-}
-/*hide popup*/
-.popup-flag{
-  display: none;
-}
-.popup-flag:not(:checked) + .popup-background{
-  display:none;
-}
-.popup-flag:not(:checked) + * + .popup{
-  display:none;
+  gap: 15px;
 }
 
-/*==============================================================*/
-/*button-container*/
-.button-container{
+/* 各グループ（縦並び） */
+.radio-group {
   display: flex;
-  align-items: center;
-  justify-content: flex-start;
   flex-direction: column;
-}
-.button-container > *{
-  margin : 15px;
+  gap: 0;
 }
 
-/*button1*/
-.button-sample1{
-  color: blue;
-  background-color: white;
-  border : 1px solid blue;
-  padding: 5px 10px;
-  border-radius: 8px;
-  transition: 0.2s;
-}
-.button-sample1:hover{
-  color: white;
-  background-color: blue;
-}
-.button-sample1:active{
-  color: white;
-  background-color: rgb(0, 0, 168);
-  transition: 0.05s;
+/* ラジオボタン間のマージンをゼロに */
+.radio-group input[type="radio"] {
+  margin: 0;
 }
 
-@keyframes popupFadeIn {
-  0% {
-    opacity: 0;
-    transform: translate(-50%, -50%) scale(0.8);
-  }
-  100% {
-    opacity: 1;
-    transform: translate(-50%, -50%) scale(1);
-  }
+p {
+  text-align: center;
+  color: #999;
+  font-size: 12px;
+  margin-top: 30px;
 }
-
-/* 元の .popup にアニメーション用の初期設定を追加 */
-.popup {
-    display: none;
-    position: fixed;
-    z-index: 101;
-    top: 50%;
-    left: 50%;
-    transform: translate(-50%, -50%);
-    background: #fff;
-    padding: 1em;
-    border-radius: 8px;
-    box-shadow: 0 0 10px #000;
-    opacity: 0;
-    transition: opacity 0.3s ease;
-    animation: none;
-}
-
-/* 表示時にアニメーション発火 */
-.popup-flag:checked ~ .popup {
-    display: block;
-    animation: popupFadeIn 0.3s ease forwards;
-}
-
-
-input[type="radio"].pink,
-input[type="radio"].lime {
-  appearance: none;
-  width: 16px;
-  height: 16px;
-  border-radius: 50%;
-  border: 2px solid #aaa;
-  margin: 2px;
-  vertical-align: middle;
-}
-
-/* チェックされたときの赤ボタン */
-input[type="radio"].pink:checked {
-  background-color: rgb(255, 105, 210);
-  border-color: rgb(143, 37, 125);
-}
-
-/* チェックされたときの緑ボタン */
-input[type="radio"].lime:checked {
-  background-color: rgb(52, 255, 228);
-  border-color: rgb(29, 89, 104);
-}
-
-.radio-row {
-    display: flex;
-    flex-wrap: wrap;
-    gap: 8px;
-    justify-content: flex-start;
-    align-items: flex-start;
-    margin-top: 15px;
-}
-
-.radio-item {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    min-width: 30px;
-}
-
-.radio-item div {
-    font-size: 12px;
-    font-weight: bold;
-    margin-bottom: 3px;
-    text-align: center;
-    color: #333;
-}
-
-.radio-item input[type="radio"] {
-    width: 16px;
-    height: 16px;
-    margin: 0;
-    cursor: default;
-}
-
-.radio-item input[type="radio"].red {
-    accent-color: #ff4444;
-}
-
-.radio-item input[type="radio"].green {
-    accent-color: #44ff44;
-}
-
-/* より小さい画面での調整 */
-@media (max-width: 768px) {
-    .radio-row {
-        gap: 6px;
-    }
-    
-    .radio-item {
-        min-width: 25px;
-    }
-    
-    .radio-item div {
-        font-size: 11px;
-    }
-    
-    .radio-item input[type="radio"] {
-        width: 14px;
-        height: 14px;
-    }
-}
-
-/* さらに小さい画面での調整 */
-@media (max-width: 480px) {
-    .radio-row {
-        gap: 4px;
-    }
-    
-    .radio-item {
-        min-width: 22px;
-    }
-    
-    .radio-item div {
-        font-size: 10px;
-    }
-    
-    .radio-item input[type="radio"] {
-        width: 12px;
-        height: 12px;
-    }}

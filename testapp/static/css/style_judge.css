@@ -214,8 +214,8 @@ input[type="checkbox"] {
   cursor: pointer;
   margin: 2px;
   background-color: #ffffff;
-  accent-color: #fff457;
-  color: black
+  accent-color: #ffffff;
+  color: black;
   border-radius: 1px;
   margin: auto; 
 }

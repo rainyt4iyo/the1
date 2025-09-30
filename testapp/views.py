@@ -14,6 +14,43 @@ def categorytranslate(category):
         return "Finals 男子"   
     elif category == "fin_wmn":
         return "Finals 女子"
+    
+def scorecalc(dictdata):
+    score = 0
+    z1, z2, z3, z4 = dictdata['z1'], dictdata['z2'], dictdata['z3'], dictdata['z4']
+    t1, t2, t3, t4 = dictdata['t1'], dictdata['t2'], dictdata['t3'], dictdata['t4']
+
+    if t1 != 0 and t1 != None:
+        score = score + 25 - (0.1 * (t1 - 1))
+    elif z1 != 0 and z1 != None:
+        score = score + 10 - (0.1 * (z1 - 1))
+    else:
+        pass
+    
+    if t2 != 0 and t2 != None:
+        score = score + 25 - (0.1 * (t2 - 1))
+    elif z2 != 0 and z2 != None:
+        score = score + 10 - (0.1 * (z2 - 1))
+    else:
+        pass
+        
+    if t3 != 0 and t3 != None:
+        score = score + 25 - (0.1 * (t3 - 1))
+    elif z3 != 0 and z3 != None:
+        score = score + 10 - (0.1 * (z3 - 1))
+    else:
+        pass
+        
+    if t4 != 0 and t4 != None:
+        score = score + 25 - (0.1 * (t4 - 1))
+    elif z4 != 0 and z4 != None:
+        score = score + 10 - (0.1 * (z4 - 1))
+    else:
+        pass
+        
+    #print(score)
+    dictdata['total'] = score
+    return dictdata 
 
 @app.route('/')
 def mainpage():
@@ -26,6 +63,14 @@ def rules():
 @app.route('/admin')
 def admin():
     return render_template('testapp/admin.html')
+
+@app.route('/admin/judge')
+def lobby_judge():
+    return render_template('testapp/lobby_judge.html')
+
+@app.route('/ranking_lobby')
+def lobby_ranking():
+    return render_template('testapp/lobby_ranking.html')
 
 @app.route('/competitors')
 def competitors():
@@ -179,4 +224,23 @@ def judgefeed(category, problem, player_number):
 
 @app.route('/ranking/<category>')
 def ranking(category):
-    return render_template('testapp/ranking.html', category=category)
+    conn = pymysql.connect(host='localhost',
+                       user='t4',
+                       password='t4_password',
+                       database='the1',
+                       cursorclass=pymysql.cursors.DictCursor)
+    cursor = conn.cursor()
+
+    try:
+        with conn.cursor() as cursor:
+            sql = f"SELECT * from {category} ORDER BY id"
+            cursor.execute(sql)
+            category = categorytranslate(category)
+            data = cursor.fetchall()
+    finally:
+        conn.close()
+    
+    for i in data:
+        scorecalc(i)
+    data = sorted(data, key=lambda x: (-x['total'], x['id'] if x['id'] is not None else float('inf')))
+    return render_template('testapp/ranking.html', category=category, data=data)
