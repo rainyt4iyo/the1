@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}"/>
+    <link rel="icon" type="image/png" href="{{ url_for('static', filename='favicon.png') }}">
+    <title>THE|1 – GIVE IT EVERYTHING – Vol.4 Supported by adidasTERREX-</title>
+</head>
+<body>
+    <button type="submit">確定</button>
+    <table>
+        <tr>
+            <td>No.</td>
+            <td>選手</td>
+            <td>TOP(1)</td>
+            <td>ZONE(1)</td>
+            <td>TOP(2)</td>
+            <td>ZONE(2)</td>
+            <td>TOP(3)</td>
+            <td>ZONE(3)</td>
+            <td>TOP(4)</td>
+            <td>ZONE(4)</td>
+            <td>pt.</td>
+        </tr>
+        {% for i in data%}
+        <tr>
+            <td>{{i.id}}</td>
+            <td>{{i.player}}</td>
+            <td>
+                <input type="number" value={{i.t1}} name="{{loop.index}}_t1">
+            </td>
+            <td>
+                <input type="number" value={{i.z1}} name="{{loop.index}}_z1">
+            </td>
+            <td>
+                <input type="number" value={{i.t2}} name="{{loop.index}}_t2">
+            </td>
+            <td>
+                <input type="number" value={{i.z2}} name="{{loop.index}}_z2">
+            </td>
+            <td>
+                <input type="number" value={{i.t3}} name="{{loop.index}}_t3">
+            </td>
+            <td>
+                <input type="number" value={{i.z3}} name="{{loop.index}}_z3">
+            </td>
+            <td>
+                <input type="number" value={{i.t4}} name="{{loop.index}}_t4">
+            </td>
+            <td>
+                <input type="number" value={{i.z4}} name="{{loop.index}}_z4">
+            </td>
+            <td>{{i.total}}</td>
+        </tr>
+        {% endfor %}
+    </table>
+</body>
+</html>

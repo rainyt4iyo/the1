@@ -27,55 +27,55 @@
           <td>{{ i.player }}</td>
           <td>
             <div class="radio-container">
-              <div class="radio-group">
+              <div class="button-group">
                 {% if i.t1 != 0 and i.t1 != None %}
-                  <input type="radio" name="t1_{{ loop.index }}" checked disabled class="p1">
+                  <input type="button" name="t1_{{ loop.index }}" disabled class="p1 checked" value={{i.t1}}>
                 {% else %}
-                  <input type="radio" name="t1_{{ loop.index }}" disabled class="p1">
+                  <input type="button" name="t1_{{ loop.index }}" disabled class="p1">
                 {% endif %}
                 {% if i.z1 != 0 and i.z1 != None %}
-                  <input type="radio" name="z1_{{ loop.index }}" checked disabled class="p1">
+                  <input type="button" name="z1_{{ loop.index }}" disabled class="p1 checked" value={{i.z1}}>
                 {% else %}
-                  <input type="radio" name="z1_{{ loop.index }}" disabled class="p1">
+                  <input type="button" name="z1_{{ loop.index }}" disabled class="p1">
                 {% endif %}
               </div>
               
-              <div class="radio-group">
+              <div class="button-group">
                 {% if i.t2 != 0 and i.t2 != None %}
-                  <input type="radio" name="t2_{{ loop.index }}" checked disabled class="p2">
+                  <input type="button" name="t2_{{ loop.index }}" disabled class="p2 checked" value={{i.t2}}>
                 {% else %}
-                  <input type="radio" name="t2_{{ loop.index }}" disabled class="p2">
+                  <input type="button" name="t2_{{ loop.index }}" disabled class="p2">
                 {% endif %}
                 {% if i.z2 != 0 and i.z2 != None %}
-                  <input type="radio" name="z2_{{ loop.index }}" checked disabled class="p2">
+                  <input type="button" name="z2_{{ loop.index }}" disabled class="p2 checked" value={{i.z2}}>
                 {% else %}
-                  <input type="radio" name="z2_{{ loop.index }}" disabled class="p2">
+                  <input type="button" name="z2_{{ loop.index }}" disabled class="p2">
                 {% endif %}
               </div>
               
-              <div class="radio-group">
+              <div class="button-group">
                 {% if i.t3 != 0 and i.t3 != None %}
-                  <input type="radio" name="t3_{{ loop.index }}" checked disabled class="p3">
+                  <input type="button" name="t3_{{ loop.index }}" disabled class="p3 checked" value={{i.t3}}>
                 {% else %}
-                  <input type="radio" name="t3_{{ loop.index }}" disabled class="p3">
+                  <input type="button" name="t3_{{ loop.index }}" disabled class="p3">
                 {% endif %}
                 {% if i.z3 != 0 and i.z3 != None %}
-                  <input type="radio" name="z3_{{ loop.index }}" checked disabled class="p3">
+                  <input type="button" name="z3_{{ loop.index }}" disabled class="p3 checked" value={{i.z3}}>
                 {% else %}
-                  <input type="radio" name="z3_{{ loop.index }}" disabled class="p3">
+                  <input type="button" name="z3_{{ loop.index }}" disabled class="p3">
                 {% endif %}
               </div>
               
-              <div class="radio-group">
+              <div class="button-group">
                 {% if i.t4 != 0 and i.t4 != None %}
-                  <input type="radio" name="t4_{{ loop.index }}" checked disabled class="p4">
+                  <input type="button" name="t4_{{ loop.index }}" disabled class="p4 checked" value={{i.t4}}>
                 {% else %}
-                  <input type="radio" name="t4_{{ loop.index }}" disabled class="p4">
+                  <input type="button" name="t4_{{ loop.index }}" disabled class="p4">
                 {% endif %}
                 {% if i.z4 != 0 and i.z4 != None %}
-                  <input type="radio" name="z4_{{ loop.index }}" checked disabled class="p4">
+                  <input type="button" name="z4_{{ loop.index }}" disabled class="p4" value={{i.z4}}>
                 {% else %}
-                  <input type="radio" name="z4_{{ loop.index }}" disabled class="p4">
+                  <input type="button" name="z4_{{ loop.index }}" disabled class="p4">
                 {% endif %}
               </div>
             </div>

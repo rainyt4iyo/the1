@@ -52,6 +52,25 @@ def scorecalc(dictdata):
     dictdata['total'] = score
     return dictdata 
 
+def noneToBlank(i):
+    if i["t1"] == None:
+        i["t1"] = "0"
+    if i["t2"] == None:
+        i["t2"] = "0"
+    if i["t3"] == None:
+        i["t3"] = "0"
+    if i["t4"] == None:
+        i["t4"] = "0"
+    if i["z1"] == None:
+        i["z1"] = "0"
+    if i["z2"] == None:
+        i["z2"] = "0"
+    if i["z3"] == None:
+        i["z3"] = "0"
+    if i["z4"] == None:
+        i["z4"] = "0"
+    return i
+
 @app.route('/')
 def mainpage():
     return render_template('testapp/mainpage.html')
@@ -244,3 +263,29 @@ def ranking(category):
         scorecalc(i)
     data = sorted(data, key=lambda x: (-x['total'], x['id'] if x['id'] is not None else float('inf')))
     return render_template('testapp/ranking.html', category=category, data=data)
+
+
+@app.route('/edit/<category>')
+def edit(category):
+    if request.method == "GET":
+        conn = pymysql.connect(host='localhost',
+                        user='t4',
+                        password='t4_password',
+                        database='the1',
+                        cursorclass=pymysql.cursors.DictCursor)
+        cursor = conn.cursor()
+
+        try:
+            with conn.cursor() as cursor:
+                sql = f"SELECT * from {category} ORDER BY id"
+                cursor.execute(sql)
+                category = categorytranslate(category)
+                data = cursor.fetchall()
+        finally:
+            conn.close()
+        
+        for i in data:
+            scorecalc(i)
+            noneToBlank(i)
+        return render_template('testapp/edit.html', category=category, data=data)
+    
