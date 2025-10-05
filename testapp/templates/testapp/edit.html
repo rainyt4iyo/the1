@@ -9,11 +9,11 @@
     <title>THE|1 – GIVE IT EVERYTHING – Vol.4 Supported by adidasTERREX-</title>
 </head>
 <body>
+    <h2>{{category}} No.{{data.id}}</h2>
+    <h3>{{data.player}}</h3>
     <button type="submit">確定</button>
     <table>
         <tr>
-            <td>No.</td>
-            <td>選手</td>
             <td>TOP(1)</td>
             <td>ZONE(1)</td>
             <td>TOP(2)</td>
@@ -24,37 +24,35 @@
             <td>ZONE(4)</td>
             <td>pt.</td>
         </tr>
-        {% for i in data%}
         <tr>
-            <td>{{i.id}}</td>
-            <td>{{i.player}}</td>
             <td>
-                <input type="number" value={{i.t1}} name="{{loop.index}}_t1">
+                <input type="number" value={{data.t1}} name="t1">
             </td>
             <td>
-                <input type="number" value={{i.z1}} name="{{loop.index}}_z1">
+                <input type="number" value={{data.z1}} name="z1">
             </td>
             <td>
-                <input type="number" value={{i.t2}} name="{{loop.index}}_t2">
+                <input type="number" value={{data.t2}} name="t2">
             </td>
             <td>
-                <input type="number" value={{i.z2}} name="{{loop.index}}_z2">
+                <input type="number" value={{data.z2}} name="z2">
             </td>
             <td>
-                <input type="number" value={{i.t3}} name="{{loop.index}}_t3">
+                <input type="number" value={{data.t3}} name="t3">
             </td>
             <td>
-                <input type="number" value={{i.z3}} name="{{loop.index}}_z3">
+                <input type="number" value={{data.z3}} name="z3">
             </td>
             <td>
-                <input type="number" value={{i.t4}} name="{{loop.index}}_t4">
+                <input type="number" value={{data.t4}} name="t4">
             </td>
             <td>
-                <input type="number" value={{i.z4}} name="{{loop.index}}_z4">
+                <input type="number" value={{data.z4}} name="z4">
             </td>
-            <td>{{i.total}}</td>
+            <td>
+                {{data.total}}
+            </td>
         </tr>
-        {% endfor %}
     </table>
 </body>
 </html>

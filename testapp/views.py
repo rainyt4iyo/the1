@@ -264,9 +264,35 @@ def ranking(category):
     data = sorted(data, key=lambda x: (-x['total'], x['id'] if x['id'] is not None else float('inf')))
     return render_template('testapp/ranking.html', category=category, data=data)
 
+@app.route('/lobby_edit')
+def lobby_edit():
 
-@app.route('/edit/<category>')
-def edit(category):
+    conn = pymysql.connect(host='localhost',
+                       user='t4',
+                       password='t4_password',
+                       database='the1',
+                       cursorclass=pymysql.cursors.DictCursor)
+    cursor = conn.cursor()
+    cat_list = ["asp_men","asp_wmn","fin_men","fin_wmn"]
+    data_list = []
+
+    try:
+        for i in cat_list:
+            with conn.cursor() as cursor:
+                sql = f"SELECT `id`, `player` from {i} ORDER BY id"
+                cursor.execute(sql)
+                data_list.append(cursor.fetchall())
+
+    finally:
+        conn.close()
+    
+    print(data_list)
+
+    return render_template('testapp/lobby_edit.html', data_list=data_list)
+
+
+@app.route('/edit/<category>/<id>')
+def edit(category, id):
     if request.method == "GET":
         conn = pymysql.connect(host='localhost',
                         user='t4',
@@ -277,15 +303,36 @@ def edit(category):
 
         try:
             with conn.cursor() as cursor:
-                sql = f"SELECT * from {category} ORDER BY id"
-                cursor.execute(sql)
+                sql = f"SELECT * from {category} where id = %s"
+                cursor.execute(sql, id)
                 category = categorytranslate(category)
                 data = cursor.fetchall()
+                data = data[0]
         finally:
             conn.close()
-        
-        for i in data:
-            scorecalc(i)
-            noneToBlank(i)
+       
+        data = scorecalc(data)
+        data = noneToBlank(data)  
         return render_template('testapp/edit.html', category=category, data=data)
     
+    if request.method == "POST":
+        t1, t2 ,t3, t4 = request.form.get('t1'),request.form.get('t2'),request.form.get('t3'),request.form.get('t4')
+        z1, z2, z3, z4 = request.form.get('z1'),request.form.get('z2'),request.form.get('z3'),request.form.get('z4')
+
+        conn = pymysql.connect(host='localhost',
+                        user='t4',
+                        password='t4_password',
+                        database='the1',
+                        cursorclass=pymysql.cursors.DictCursor)
+        cursor = conn.cursor()
+
+        try:
+            with conn.cursor() as cursor:
+                sql = f"UPDATE {category} SET t1=%s, t2=%s, t3=%s, t4=%s, z1=%s, z2=%s, z3=%s, z4=%s, where id=%s"
+                cursor.execute(sql, t1, t2 ,t3, t4, z1, z2, z3, z4, id)
+        finally:
+            conn.close()
+
+        return redirect(url_for('lobby_edit'))
+ 
+
