@@ -99,17 +99,17 @@ button:hover::after {
 
 button:hover {
   transform: translateY(-2px);
-  box-shadow: 0 10px 20px rgba(0,0,0,0.2);
+  box-shadow: 0 10px 20px #ffffff;
   opacity: 0.95;
 }
 
 .white_button {
-  background-color: #3a3c4b;
+  background-color: #7177a5;
   color: #ffffff;
 }
 
 .black_button {
-  background: #3a3c4b;
+  background: #7177a5;
   color: #ffffff;
 }
 
