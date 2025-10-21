@@ -1,226 +1,270 @@
-/* すべての要素にbox-sizingを適用 */
-*, *::before, *::after {
+* {
+  margin: 0;
+  padding: 0;
   box-sizing: border-box;
 }
 
-/* 画面全体の基本スタイル */
-html, body {
-  margin: 0;
-  padding: 0;
-  overflow-x: hidden;
-  font-family: 'メイリオ', 'Meiryo', 'Helvetica Neue', Arial, sans-serif;
-  background: linear-gradient(135deg, #24252e, #000000);
-  color: #ffffff;
-  text-align: center;
-}
-
-/* コンテンツラッパー */
-.container {
-  max-width: 900px;
-  margin: 0 auto;
+body {
+  background: #f5f5f5;
+  color: #212121;
+  font-family: 'Helvetica Neue', Arial, 'Hiragino Sans', 'Hiragino Kaku Gothic ProN', 'Yu Gothic', YuGothic, Meiryo, sans-serif;
+  line-height: 1.6;
+  min-height: 100vh;
   padding: 20px;
-  animation: fadeIn 0.6s ease-in-out;
 }
 
-/* フェードイン */
-@keyframes fadeIn {
-  from { opacity: 0; transform: translateY(10px); }
-  to { opacity: 1; transform: translateY(0); }
+.container {
+  max-width: 600px;
+  margin: 0 auto;
+  padding: 0 15px;
 }
 
-/* ヘッダー画像 */
-.header {
-  max-width: 100%;
-  height: auto;
-  display: block;
-  margin: 0 auto 1rem;
+.mt-4 {
+  margin-top: 20px;
+}
+
+h1 {
+  font-size: 2rem;
+  font-weight: 700;
+  text-align: center;
+  margin: 25px 0;
+  padding: 20px;
+  color: #252568;
+  background: #ffffff;
+  border: 3px solid #3d3d88;
   border-radius: 12px;
-  box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
 }
 
-/* 見出し */
-h1, h2 {
-  margin: 1rem 0 0.5rem;
-  position: relative;
-  font-family: 'Ubuntu Mono', monospace;
+h3.heading-green {
+  font-size: 1.3rem;
+  font-weight: 600;
+  text-align: center;
+  margin: 20px 0;
+  padding: 15px;
+  color: #ffffff;
+  background: linear-gradient(135deg,#47474d 0%, #2b2b3b 100%);
+  border-radius: 8px;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.15);
+  letter-spacing: 0.05em;
 }
-h1 { font-size: 1.8rem; }
-h2 { font-size: 1.2rem; color: #ffffff; }
 
-h1::after, h2::after {
-  content: '';
+br {
   display: block;
-  width: 30px;
-  height: 3px;
-  background: #fff783;
-  margin: 0.5rem auto 0;
-  border-radius: 2px;
+  content: "";
+  margin: 10px 0;
 }
 
-h3 {
-  font-size: 1.1rem;
-  margin-top: 1.4rem;
-  color: #e9e9e9;
-}
-
-/* ボタン */
+/* ボタン共通スタイル */
 button {
   display: block;
-  width: 90%;
-  max-width: 400px;
-  margin: 12px auto;
-  padding: 15px;
-  font-size: 1rem;
-  font-weight: bold;
+  width: 100%;
+  margin: 15px 0;
+  padding: 18px 20px;
+  font-size: 1.1rem;
+  font-weight: 700;
   border: none;
-  border-radius: 12px;
+  border-radius: 10px;
   cursor: pointer;
-  box-shadow: 0 6px 12px rgba(255, 255, 255, 0.1);
-  transition: all 0.2s ease-in-out;
-  position: relative;
-  overflow: hidden;
+  transition: all 0.2s ease;
+  letter-spacing: 0.05em;
+  box-shadow: 0 3px 10px rgba(0, 0, 0, 0.15);
 }
 
-button::after {
-  content: '';
-  position: absolute;
-  top: 0;
-  left: -75%;
-  width: 50%;
-  height: 100%;
-  background: linear-gradient(120deg, rgba(231, 255, 11, 0.2), rgba(255,255,255,0));
-  transform: skewX(-20deg);
-  transition: left 0.6s ease-in-out;
+button:active {
+  transform: translateY(2px);
+  box-shadow: 0 1px 5px rgba(0, 0, 0, 0.2);
 }
 
-button:hover::after {
-  left: 125%;
-}
-
-button:hover {
-  transform: translateY(-2px);
-  box-shadow: 0 10px 20px rgba(0,0,0,0.2);
-  opacity: 0.95;
-}
-
-.white_button {
-  background-color: #ffffff;
-  color: #000000;
-}
-
+/* 戻るボタン */
 .black_button {
-  background: #5b5e70;
+  background: #424242;
   color: #ffffff;
+  border: 2px solid #616161;
+  font-size: 1rem;
+  padding: 15px;
 }
 
+.black_button:hover {
+  background: #616161;
+}
+
+/* 送信ボタン */
 .yellow_button {
-  background: #fff237;
-  color: #000000;
+  background: linear-gradient(135deg, #ffd700 0%, #ffb300 100%);
+  color: #1a1a1a;
+  border: 3px solid #ff8f00;
+  font-size: 1.3rem;
+  padding: 20px;
+  margin-top: 25px;
+  box-shadow: 0 4px 15px rgba(255, 183, 0, 0.4);
+}
+
+.yellow_button:hover {
+  background: linear-gradient(135deg, #ffed4e 0%, #ffc107 100%);
+  transform: translateY(-2px);
+  box-shadow: 0 6px 20px rgba(255, 183, 0, 0.5);
+}
+
+.yellow_button:active {
+  transform: translateY(1px);
 }
 
 /* テーブル */
 table {
-  width: 60%;
-  margin: 20px auto;
-  border-collapse: collapse;
-  background-color: #2f3136;
-  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
-  border-radius: 8px;
+  width: 100%;
+  margin: 25px 0;
+  border-collapse: separate;
+  border-spacing: 0;
+  background: #ffffff;
+  border-radius: 12px;
   overflow: hidden;
-  border: 2px solid #8d8d8d;
-  font-weight: bolder;
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+  border: 2px solid #e0e0e0;
 }
 
-table thead {
-  background-color: #0f0f0f;
-  color: white;
-  font-weight: bolder;
-}
-
-table th, table td {
-  padding: 12px 16px;
+table tr th {
+  background: linear-gradient(135deg, #47474d 0%, #2a2a35 100%);
+  color: #ffffff;
+  font-weight: 700;
+  font-size: 1.2rem;
+  padding: 18px 15px;
   text-align: center;
-  border: 1px solid #535458;
+  letter-spacing: 0.08em;
+  border: none;
+}
+
+table tr td {
+  padding: 20px 15px;
+  text-align: center;
+  border-bottom: 1px solid #e0e0e0;
+  background: #fafafa;
   font-size: 1rem;
-  text-align: center;      /* 横方向の中央揃え */
-  vertical-align: middle;  /* 縦方向の中央揃え */
 }
 
-table tbody tr:nth-child(even) {
-  background-color: #2f3136;
+table tr:last-child td {
+  border-bottom: none;
 }
 
-
-
-/* レスポンシブ */
-@media (min-width: 600px) {
-  h1 { font-size: 2.2rem; }
-  h2 { font-size: 1.6rem; }
-  button { font-size: 1.1rem; }
+/* チェックボックス行 */
+.checkbox-td {
+  background: #ffffff !important;
+  padding: 25px 15px !important;
 }
 
-.selectbox-2 {
-    position: relative;
-    display: inline-block;  /* ここが重要 */
-    width: 100%;            /* 親幅に合わせる */
-    max-width: 250px;       /* 任意で調整 */
-}
-
-/* 矢印用疑似要素 */
-.selectbox-2::after {
-    content: '';
-    position: absolute;
-    top: 50%;
-    right: 0.8em;          /* 右端から少し内側 */
-    transform: translateY(-50%) rotate(45deg);
-    width: 6px;
-    height: 6px;
-    border-bottom: 2px solid #fff;
-    border-right: 2px solid #fff;
-    pointer-events: none;  /* 矢印はクリック対象にならない */
-}
-
-/* select自体のスタイル */
-.selectbox-2 select {
-    appearance: none;
-    -webkit-appearance: none;
-    -moz-appearance: none;
-    width: 60%;
-    height: 2.8em;
-    padding: 0.4em 2.5em 0.4em 0.8em; /* 右側に矢印分の余白 */
-    border: 2px solid #fffc3d;
-    border-radius: 4px;
-    font-size: 1.5em;
-    color: #333;
-    background-color: #ffffff;
-    cursor: pointer;
-}
-
-.selectbox-2 select:focus {
-    outline: 2px solid #fff45c;
-}
-
-/* ::before は削除してゴミ防止 */
-.selectbox-2::before {
-    display: none;
-}
-
-
-input[type="checkbox"] {
-  width: calc(100% - 4px);
-  height: calc(100% - 4px);
+.checkbox-td input[type="checkbox"] {
   width: 100px;
   height: 100px;
   cursor: pointer;
-  margin: 2px;
-  background-color: #ffffff;
-  accent-color: #ffffff;
-  color: black;
-  border-radius: 1px;
-  margin: auto; 
+  accent-color: #47474d;
 }
 
-input[type="checkbox"] {
+/* セレクトボックス */
+.selectbox-2 {
   display: block;
-  margin: auto;  /* 横方向も縦方向もセル中央に寄る */
+  width: 100%;
+}
+
+.selectbox-2 select {
+  width: 100%;
+  padding: 12px 15px;
+  font-size: 2.0rem;
+  font-weight: 600;
+  border: 2px solid #bdbdbd;
+  border-radius: 8px;
+  background: #ffffff;
+  color: #212121;
+  cursor: pointer;
+  appearance: none;
+  -webkit-appearance: none;
+  -moz-appearance: none;
+  background-image: url('data:image/svg+xml;charset=UTF-8,<svg xmlns="http://www.w3.org/2000/svg" width="12" height="8" viewBox="0 0 12 8"><path fill="%23424242" d="M6 8L0 0h12z"/></svg>');
+  background-repeat: no-repeat;
+  background-position: right 12px center;
+  padding-right: 35px;
+}
+
+.selectbox-2 select:focus {
+  outline: none;
+  border-color: #1e88e5;
+  box-shadow: 0 0 0 3px rgba(30, 136, 229, 0.2);
+}
+
+/* フォーム */
+form {
+  background: #ffffff;
+  padding: 25px;
+  border-radius: 12px;
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+  border: 2px solid #e0e0e0;
+}
+
+/* スマートフォン最適化 */
+@media (max-width: 480px) {
+  body {
+    padding: 15px;
+  }
+  
+  .container {
+    padding: 0 10px;
+  }
+  
+  h1 {
+    font-size: 1.6rem;
+    padding: 15px;
+  }
+  
+  h3.heading-green {
+    font-size: 1.1rem;
+    padding: 12px;
+  }
+  
+  button {
+    padding: 16px 18px;
+    font-size: 1rem;
+  }
+  
+  .yellow_button {
+    font-size: 1.2rem;
+    padding: 18px;
+  }
+  
+  table tr th {
+    font-size: 1.1rem;
+    padding: 15px 10px;
+  }
+  
+  table tr td {
+    padding: 18px 10px;
+    font-size: 0.95rem;
+  }
+  
+  .checkbox-td input[type="checkbox"] {
+    width: 30px;
+    height: 30px;
+  }
+  
+  .selectbox-2 select {
+    font-size: 1rem;
+    padding: 10px 12px;
+  }
+  
+  form {
+    padding: 20px;
+  }
+}
+
+@media (max-width: 360px) {
+  h1 {
+    font-size: 1.4rem;
+  }
+  
+  table tr th {
+    font-size: 1rem;
+    padding: 12px 8px;
+  }
+  
+  .selectbox-2 select {
+    font-size: 0.95rem;
+  }
 }
