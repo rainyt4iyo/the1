@@ -1,10 +1,10 @@
 [Unit]
-Description=The3 Flask Application
+Description=The1 Flask Application
 After=network.target
 
 [Service]
 User=gyate
-WorkingDirectory=/home/gyate/the3
+WorkingDirectory=/home/gyate/the1
 Environment="PATH=/home/gyate/venv"
 ExecStart=/home/gyate/venv/binpython server.py
 Restart=always
