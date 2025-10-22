@@ -10,20 +10,20 @@
 </head>
 <body>
   <div class="container">
-    <h1> リアルタイムリザルト / Current Ranking</h1> 
-    <br>
-    <h2>  THE|1 - {{category}} - </h2>
+    <h1><b>リアルタイムリザルト </b></h1> 
+    <h2> Live Results </h2>
+    <h3> THE|1  {{category}}  </h3>
     <br>
     <table>
       <tr>
-        <td>順位</td>
-        <td>選手</td>
-        <td>詳細</td>
-        <td>pt.</td>
+        <td>RANK</td>
+        <td>NAME</td>
+        <td>SCORE</td>
+        <td>POINT</td>
       </tr>
       {% for i in data %}
         <tr>
-          <td>#{{ loop.index }}</td>
+          <td>{{ loop.index }}</td>
           <td>{{ i.player }}</td>
           <td>
             <div class="radio-container">

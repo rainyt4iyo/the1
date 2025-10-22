@@ -7,13 +7,13 @@ from contextlib import contextmanager
 
 def categorytranslate(category):
     if category == "asp_men":
-        return "Aspirant 男子"
+        return "- Aspirant - Men's Qualification "
     elif category == "asp_wmn":
-        return "Aspirant 女子"  
+        return "- Aspirant - Women's Qualification"  
     elif category == "fin_men":
-        return "Finals 男子"   
+        return "- Finals - Men's Qualification"   
     elif category == "fin_wmn":
-        return "Finals 女子"
+        return "- Finals - Women's Qualification"
     
 def scorecalc(dictdata):
     score = 0
