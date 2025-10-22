@@ -96,7 +96,7 @@ p[size="2"] {
 }
 button {
   display: block;
-  width: calc(88% - 40px);
+  width: calc(100% - 40px);
   max-width: 500px;
   margin: 12px auto;
   padding: 18px 24px;
