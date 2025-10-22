@@ -10,21 +10,20 @@
 </head>
 <body>
   <div class="container">
-    <h1> 出場選手一覧 / Competitors List</h1> 
-    <br>
-    <h2> {{category}}</h2> 
-    <br>
+    <h1> 出場選手一覧 </h1> 
+    <h3> - Athletes - </h3>
+    <h2> {{category}} </h2> 
     <table>
       <thead>
       <tr>
-        <th>番号 / No.</th>
-        <th>選手名 / Name</th>
+        <th>No.</th>
+        <th>Name</th>
       </tr>
       </thead>
       <tbody>
       {% for player in listed %}
       <tr>
-        <td>{{ player.id }}</td>
+        <td>#{{ player.id }}</td>
         <td>{{ player.player }}</td>
       </tr>
       {% endfor %}
