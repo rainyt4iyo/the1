@@ -272,7 +272,7 @@ button:active::before {
   }
   
   button {
-    width: calc(88% - 30px);
+    width: calc(96% - 30px);
     padding: 16px 20px;
     font-size: 0.95rem;
     margin: 10px auto;
