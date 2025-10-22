@@ -93,8 +93,8 @@ table {
   width: 100%;
   border-collapse: collapse;
   margin-top: 20px;
-  transform: scale(0.95);
-  transform-origin: top center;
+  font-size: 0.7rem;
+  font-weight: bold;
 }
 
 table tr {
@@ -109,6 +109,7 @@ table td {
 table tr:first-child {
   background-color: #333;
   color: white;
+  font-size: 0.6rem;
   font-weight: bold;
 }
 
@@ -147,7 +148,7 @@ input[type="button"].checked {
   display: flex;
   justify-content: center;
   align-items: center;
-  gap: 2px;
+  gap: 4px;
 }
 
 /* 各グループ（縦並び） */
