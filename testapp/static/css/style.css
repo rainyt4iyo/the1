@@ -116,8 +116,8 @@ button {
 button.live::after {
   content: 'LIVE';
   position: absolute;
-  top: 50%;
-  right: -45px;
+  top: 20%;
+  right: -0px;
   transform: translateY(-50%);
   background: linear-gradient(135deg, #ff1744 0%, #d50000 100%);
   color: #ffffff;
