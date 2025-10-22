@@ -11,9 +11,38 @@ def categorytranslate(category):
     elif category == "asp_wmn":
         return "- Aspirant - Women's Qualification"  
     elif category == "fin_men":
-        return "- Finals - Men's Qualification"   
+        return "- GIVE IT EVERYTHING - Men's Qualification"   
     elif category == "fin_wmn":
-        return "- Finals - Women's Qualification"
+        return "- GIVE IT EVERYTHING - Women's Qualification"
+    
+def categorytranslateToDay(category):
+    if category == "asp_men":
+        return "DAY1 - Aspirant -"
+    elif category == "asp_wmn":
+        return "DAY1 - Aspirant -"  
+    elif category == "fin_men":
+        return "DAY2 - GIVE IT EVERYTHING -"   
+    elif category == "fin_wmn":
+        return "DAY2 - GIVE IT EVERYTHING -"
+    
+def categorytranslateWithBrank (category):
+    if category == "asp_men":
+        return "- Aspirant - \n Men's Qualification "
+    elif category == "asp_wmn":
+        return "- Aspirant - \n Women's Qualification"  
+    elif category == "fin_men":
+        return "- GIVE IT EVERYTHING - \n Men's Qualification"   
+    elif category == "fin_wmn":
+        return "- GIVE IT EVERYTHING - \n Women's Qualification"
+    
+def omitName(dictdata):
+    name = dictdata['player']
+    if " " in name:
+        name_parts = name.split(" ")
+        name = name_parts[0] + " " + name_parts[1][0] + "."
+    dictdata['player'] = name
+    return dictdata
+        
     
 def scorecalc(dictdata):
     score = 0
@@ -121,7 +150,7 @@ def competitorslist(category):
     finally:
         conn.close()
 
-    category = categorytranslate(category)
+    category = categorytranslateToDay(category)
 
     return render_template('testapp/competitors_list.html', 
                                listed=listed,
@@ -254,13 +283,15 @@ def ranking(category):
         with conn.cursor() as cursor:
             sql = f"SELECT * from {category} ORDER BY id"
             cursor.execute(sql)
-            category = categorytranslate(category)
+            category = categorytranslateWithBrank(category)
+            category = category.replace("\n", "<br>")
             data = cursor.fetchall()
     finally:
         conn.close()
     
     for i in data:
         scorecalc(i)
+        omitName(i)
     data = sorted(data, key=lambda x: (-x['total'], x['id'] if x['id'] is not None else float('inf')))
     return render_template('testapp/ranking.html', category=category, data=data)
 

@@ -329,15 +329,15 @@ button:active::before {
 }
 /* テーブル */
 table {
-  width: 100%;
-  margin: 30px auto;
+  width: 90%;
+  margin: 30px auto; /* ← 左右中央寄せ */
   border-collapse: separate;
   border-spacing: 0;
   color: #000000;
   background: rgb(255, 255, 255);
-  border-radius: 12px;
   overflow: hidden;
   box-shadow: 0 4px 20px rgba(0, 0, 0, 0.4);
+  text-align: center; /* ← 中身も中央寄せ */
 }
 
 thead {
@@ -392,7 +392,7 @@ tbody td:first-child {
 
 tbody tr td:last-child,
 tbody td:last-child {
-  text-align: center;
+  text-align: left;
   font-weight: 700;
   padding-left: 15px;
   font-size: 1.1rem;
@@ -460,6 +460,10 @@ p[size="2"] {
 }
 
 @media (max-width: 480px) {
+  table {
+    width: 90%;
+    margin: 15px auto;
+  }
   h1 {
     font-size: 1.6rem;
   }
