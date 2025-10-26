@@ -81,21 +81,21 @@ for i in range(1,10):
     cursor.execute(sql, temp)
     conn.commit()
 
-ws = wb["asp_wmn"]
+ws = wb["f_asp_wmn"]
 for i in range(1,10):
     temp = (ws.cell(i,1).value, ws.cell(i,2).value)
     sql = "INSERT INTO f_asp_wmn(id, player) VALUES (%s, %s) ON DUPLICATE KEY UPDATE player = VALUES(player)"
     cursor.execute(sql, temp)
     conn.commit()
 
-ws = wb["fin_men"]
+ws = wb["f_fin_men"]
 for i in range(1,8):
     temp = (ws.cell(i,1).value, ws.cell(i,2).value)
     sql = "INSERT INTO f_fin_men(id, player) VALUES (%s, %s) ON DUPLICATE KEY UPDATE player = VALUES(player)"
     cursor.execute(sql, temp)
     conn.commit()
 
-ws = wb["fin_wmn"]
+ws = wb["f_fin_wmn"]
 for i in range(1,8):
     temp = (ws.cell(i,1).value, ws.cell(i,2).value)
     sql = "INSERT INTO f_fin_wmn(id, player) VALUES (%s, %s) ON DUPLICATE KEY UPDATE player = VALUES(player)"
