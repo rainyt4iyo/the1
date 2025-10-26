@@ -293,7 +293,11 @@ def ranking(category):
         scorecalc(i)
         omitName(i)
     data = sorted(data, key=lambda x: (-x['total'], x['id'] if x['id'] is not None else float('inf')))
-    return render_template('testapp/ranking.html', category=category, data=data)
+    if category == "f_asp_men" or "f_asp_wmn":
+        return render_template('testapp/ranking_asp.html', category=category, data=data)
+    else:
+        return render_template('testapp/ranking.html', category=category, data=data)
+
 
 @app.route('/lobby_edit')
 def lobby_edit():
