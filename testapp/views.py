@@ -300,6 +300,11 @@ def ranking(category):
         with conn.cursor() as cursor:
             sql = f"SELECT * from {category} ORDER BY id"
             cursor.execute(sql)
+            category_binary = False
+            if category == "f_asp_men":
+                category_binary = True
+            elif category == "f_asp_wmn":
+                category_binary = True
             category = categorytranslateWithBrank(category)
             category = category.replace("\n", "<br>")
             data = cursor.fetchall()
@@ -310,7 +315,7 @@ def ranking(category):
         scorecalc(i)
         omitName(i)
     data = sorted(data, key=lambda x: (-x['total'], x['id'] if x['id'] is not None else float('inf')))
-    if category == "f_asp_men" or "f_asp_wmn":
+    if category_binary == True:
         return render_template('testapp/ranking_asp.html', category=category, data=data)
     else:
         return render_template('testapp/ranking.html', category=category, data=data)
