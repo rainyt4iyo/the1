@@ -102,7 +102,6 @@ for i in range(1,8):
     cursor.execute(sql, temp)
     conn.commit()
 
-
 print("--------------------------------------")
 
 import testapp.views
