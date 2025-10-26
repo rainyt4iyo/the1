@@ -315,6 +315,7 @@ def ranking(category):
         scorecalc(i)
         omitName(i)
     data = sorted(data, key=lambda x: (-x['total'], x['id'] if x['id'] is not None else float('inf')))
+    print(data)
     if category_binary == True:
         return render_template('testapp/ranking_asp.html', category=category, data=data)
     else:
