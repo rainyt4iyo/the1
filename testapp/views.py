@@ -141,6 +141,10 @@ def lobby_ranking():
 def competitors():
     return render_template('testapp/competitors.html')
 
+@app.route('/sponsors')
+def sponsors():
+    return render_template('testapp/sponsors.html')
+
 @app.route('/competitors/<category>')
 def competitorslist(category):
 
