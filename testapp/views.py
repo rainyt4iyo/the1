@@ -14,6 +14,15 @@ def categorytranslate(category):
         return "- GIVE IT EVERYTHING - Men's Qualification"   
     elif category == "fin_wmn":
         return "- GIVE IT EVERYTHING - Women's Qualification"
+    elif category == "f_asp_men":
+        return "- Aspirant - Men's Final "
+    elif category == "f_asp_wmn":
+        return "- Aspirant - Women's Final"  
+    elif category == "f_fin_men":
+        return "- GIVE IT EVERYTHING - Men's Final"   
+    elif category == "f_fin_wmn":
+        return "- GIVE IT EVERYTHING - Women's Final"
+
     
 def categorytranslateToDay(category):
     if category == "asp_men":
@@ -34,6 +43,14 @@ def categorytranslateWithBrank (category):
         return "- GIVE IT EVERYTHING - \n Men's Qualification"   
     elif category == "fin_wmn":
         return "- GIVE IT EVERYTHING - \n Women's Qualification"
+    elif category == "f_asp_men":
+        return "- Aspirant - \n Men's Final"
+    elif category == "f_asp_wmn":
+        return "- Aspirant - \n Women's Final"  
+    elif category == "f_fin_men":
+        return "- GIVE IT EVERYTHING - \n Men's Final"   
+    elif category == "f_fin_wmn":
+        return "- GIVE IT EVERYTHING - \n Women's Final"
     
 def omitName(dictdata):
     name = dictdata['player']
