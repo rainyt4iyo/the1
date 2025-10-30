@@ -179,8 +179,29 @@ def competitorslist(category):
 
 @app.route('/judge/<category>/<problem>')
 def judgeselect(category, problem):
+    conn = pymysql.connect(host='localhost',
+                       user='t4',
+                       password='t4_password',
+                       database='the1',
+                       cursorclass=pymysql.cursors.DictCursor)
+    cursor = conn.cursor()
+
+    try:
+        with conn.cursor() as cursor:
+            sql = f"SELECT player from {category}"
+            cursor.execute(sql) 
+            playerdata = cursor.fetchall()
+    finally:
+        conn.close()
+    print(playerdata)
+
+    player = []
+    for i in playerdata:
+        name = i['player']
+        player.append(name)
+
     cat_name = categorytranslate(category)
-    return render_template('testapp/judgeselect.html', category=category, problem=problem, cat_name=cat_name)
+    return render_template('testapp/judgeselect.html', category=category, problem=problem, cat_name=cat_name, player=player)
 
 @app.route('/judge/<category>/<problem>/<player_number>', methods=['GET', 'POST'])
 def judgefeed(category, problem, player_number):

@@ -29,10 +29,9 @@ h1 {
   text-align: center;
   margin: 25px 0;
   padding: 20px;
-  color: #252568;
-  background: #ffffff;
-  border: 3px solid #3d3d88;
-  border-radius: 12px;
+  color: #ffffff;
+  background: #000000;
+  border: 3px solid #757575;
   box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
 }
 
@@ -41,9 +40,9 @@ h3.heading-green {
   font-weight: 600;
   text-align: center;
   margin: 20px 0;
-  padding: 15px;
+  padding: 10px;
   color: #ffffff;
-  background: linear-gradient(135deg,#47474d 0%, #2b2b3b 100%);
+  background: #292929;
   border-radius: 8px;
   box-shadow: 0 2px 8px rgba(0, 0, 0, 0.15);
   letter-spacing: 0.05em;
@@ -78,11 +77,11 @@ button:active {
 
 /* 戻るボタン */
 .black_button {
-  background: #424242;
+  background: #292929;
   color: #ffffff;
   border: 2px solid #616161;
-  font-size: 1rem;
-  padding: 15px;
+  font-size: 1.5rem;
+  padding:20px;
 }
 
 .black_button:hover {
@@ -124,10 +123,10 @@ table {
 }
 
 table tr th {
-  background: linear-gradient(135deg, #47474d 0%, #2a2a35 100%);
+  background: #2e2e2e;
   color: #ffffff;
   font-weight: 700;
-  font-size: 1.2rem;
+  font-size: 1.8rem;
   padding: 18px 15px;
   text-align: center;
   letter-spacing: 0.08em;

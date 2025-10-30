@@ -16,7 +16,7 @@
     <h2> {{ cat_name }} , {{ problem }}</h2> 
     <br>
     {% for i in range(60) %}
-    <button class="black_button" onclick="location.href='/judge/{{ category }}/{{ problem }}/{{ i+1 }}'"> {{ i+1 }} </button>
+    <button class="black_button" onclick="location.href='/judge/{{ category }}/{{ problem }}/{{ i+1 }}'"> {{ i+1 }} : {{ player[i] }} </button>
     {% endfor %}
   </div>
 </body>
