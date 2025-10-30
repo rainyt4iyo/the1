@@ -54,6 +54,14 @@ def categorytranslateWithBrank (category):
     
 def omitName(dictdata):
     name = dictdata['player']
+
+    if not dictdata or 'player' not in dictdata:
+        return dictdata
+
+    name = dictdata['player']
+    if not name:  # Noneや空文字を防ぐ
+        return dictdata
+
     if " " in name:
         name_parts = name.split(" ")
         name = name_parts[0] + " " + name_parts[1][0] + "."
@@ -337,6 +345,8 @@ def ranking(category):
         conn.close()
     
     for i in data:
+        if i is None:
+            continue
         scorecalc(i)
         omitName(i)
     data = sorted(data, key=lambda x: (-x['total'], x['id'] if x['id'] is not None else float('inf')))
