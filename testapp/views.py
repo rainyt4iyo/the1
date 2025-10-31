@@ -103,7 +103,59 @@ def scorecalc(dictdata):
         pass
         
     #print(score)
-    dictdata['total'] = score
+    dictdata['total'] = round(score,10)
+    return dictdata 
+
+def scorecalc_listed(dictdata):
+    score_list = []
+    z1, z2, z3, z4 = dictdata['z1'], dictdata['z2'], dictdata['z3'], dictdata['z4']
+    t1, t2, t3, t4 = dictdata['t1'], dictdata['t2'], dictdata['t3'], dictdata['t4']
+
+    if t1 != 0 and t1 != None:
+        score = 25 - (0.1 * (t1 - 1))
+        score_list.append(score)
+    elif z1 != 0 and z1 != None:
+        score = 10 - (0.1 * (z1 - 1))
+        score_list.append(score)
+    else:
+        score = 0
+        score_list.append(score)
+    
+    if t2 != 0 and t2 != None:
+        score = 25 - (0.1 * (t2 - 1))
+        score_list.append(score)
+    elif z2 != 0 and z2 != None:
+        score = 10 - (0.1 * (z2 - 1))
+        score_list.append(score)
+    else:
+        score = 0
+        score_list.append(score)
+        
+    if t3 != 0 and t3 != None:
+        score = 25 - (0.1 * (t3 - 1))
+        score_list.append(score)
+    elif z3 != 0 and z3 != None:
+        score = 10 - (0.1 * (z3 - 1))
+        score_list.append(score)
+    else:
+        score = 0
+        score_list.append(score)
+        
+    if t4 != 0 and t4 != None:
+        score = 25 - (0.1 * (t4 - 1))
+        score_list.append(score)
+    elif z4 != 0 and z4 != None:
+        score = 10 - (0.1 * (z4 - 1))
+        score_list.append(score)
+    else:
+        score = 0
+        score_list.append(score)
+        
+    print(score_list)
+    score_list.append(score_list[0]+score_list[1]+score_list[2]+score_list[3])
+    for i in score_list:
+        i = round(i, 10)
+    dictdata['total'] = score_list
     return dictdata 
 
 def noneToBlank(i):
@@ -350,11 +402,45 @@ def ranking(category):
         scorecalc(i)
         omitName(i)
     data = sorted(data, key=lambda x: (-x['total'], x['id'] if x['id'] is not None else float('inf')))
-    print(data)
+
     if category_binary == True:
         return render_template('testapp/ranking_asp.html', category=category, data=data)
     else:
         return render_template('testapp/ranking.html', category=category, data=data)
+
+
+@app.route('/scorecheck/<category>')
+def scorecheck(category):
+    conn = pymysql.connect(host='localhost',
+                       user='t4',
+                       password='t4_password',
+                       database='the1',
+                       cursorclass=pymysql.cursors.DictCursor)
+    cursor = conn.cursor()
+
+    try:
+        with conn.cursor() as cursor:
+            sql = f"SELECT * from {category} ORDER BY id"
+            cursor.execute(sql)
+            category_binary = False
+            if category == "f_asp_men":
+                category_binary = True
+            elif category == "f_asp_wmn":
+                category_binary = True
+            category = categorytranslateWithBrank(category)
+            category = category.replace("\n", "<br>")
+            data = cursor.fetchall()
+    finally:
+        conn.close()
+    
+    for i in data:
+        print("Looping:", i) 
+        if i is None:
+            continue
+        i = scorecalc_listed(i)
+        omitName(i)
+
+    return render_template('testapp/scorecheck.html', category=category, data=data)
 
 
 @app.route('/lobby_edit')

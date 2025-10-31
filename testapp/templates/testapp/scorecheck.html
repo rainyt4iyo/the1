@@ -10,7 +10,7 @@
 </head>
 <body>
   <div class="container">
-    <h1><b>リアルタイムリザルト </b></h1> 
+    <h1><b>ジャッジ確認用画面 </b></h1> 
     <h2> Live Results </h2>
     <h3> THE|1  {{category | safe}}  </h3>
     <br>
@@ -19,6 +19,10 @@
         <td>RANK</td>
         <td>NAME</td>
         <td>SCORE</td>
+        <td>第1課題</td>
+        <td>第2課題</td>
+        <td>第3課題</td>
+        <td>第4課題</td>
         <td>POINT</td>
       </tr>
       {% for i in data %}
@@ -80,7 +84,11 @@
               </div>
             </div>
         </td>
-          <td>{{ i.total }}</td>
+        <td> {{ i.total[0] }} </td>
+        <td> {{ i.total[1] }} </td>
+        <td> {{ i.total[2] }} </td>
+        <td> {{ i.total[3] }} </td>
+        <td> {{ i.total[4] }} </td>
         </tr>
       {% endfor %}
     </table>
