@@ -152,9 +152,7 @@ def scorecalc_listed(dictdata):
         score_list.append(score)
         
     print(score_list)
-    score_list.append(score_list[0]+score_list[1]+score_list[2]+score_list[3])
-    for i in score_list:
-        i = round(i, 10)
+    score_list.append(round(score_list[0]+score_list[1]+score_list[2]+score_list[3], 10))
     dictdata['total'] = score_list
     return dictdata 
 
