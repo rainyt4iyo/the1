@@ -400,6 +400,17 @@ def ranking(category):
         scorecalc(i)
         omitName(i)
     data = sorted(data, key=lambda x: (-x['total'], x['id'] if x['id'] is not None else float('inf')))
+    # --- 同点なら同じ順位にする ---
+    rank = 1
+    prev_score = None
+    same_rank_count = 0
+
+    for i, row in enumerate(data):
+        if row['total'] != prev_score:
+            rank = i + 1  # 新しいスコアなので、順位は現在のインデックス + 1
+            prev_score = row['total']
+        row['rank'] = rank
+
     if cat == "asp_men":
         del data[-63:]
     elif cat == "asp_wmn":
@@ -410,6 +421,8 @@ def ranking(category):
         del data[-1:]
     if category_binary == True:
         return render_template('testapp/ranking_asp.html', category=category, data=data)
+    elif cat == "asp_men" or cat == "asp_wmn" or cat == "fin_men" or cat == "fin_wmn":
+        return render_template('testapp/ranking_index.html', category=category, data=data)
     else:
         return render_template('testapp/ranking.html', category=category, data=data)
 
