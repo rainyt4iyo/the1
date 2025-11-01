@@ -407,7 +407,7 @@ def ranking(category):
     elif cat == "f_asp_men":
         del data[-1:]
     elif cat == "f_asp_wmn":
-        del data[-1:]
+        del data[-2:]
     if category_binary == True:
         return render_template('testapp/ranking_asp.html', category=category, data=data)
     else:
