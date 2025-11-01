@@ -378,8 +378,7 @@ def ranking(category):
                        database='the1',
                        cursorclass=pymysql.cursors.DictCursor)
     cursor = conn.cursor()
-    category = categorytranslateWithBrank(category)
-    category = category.replace("\n", "<br>")
+
     try:
         with conn.cursor() as cursor:
             sql = f"SELECT * from {category} ORDER BY id"
@@ -389,7 +388,8 @@ def ranking(category):
                 category_binary = True
             elif category == "f_asp_wmn":
                 category_binary = True
-
+            category = categorytranslateWithBrank(category)
+            category = category.replace("\n", "<br>")
             data = cursor.fetchall()
     finally:
         conn.close()
@@ -400,10 +400,7 @@ def ranking(category):
         scorecalc(i)
         omitName(i)
     data = sorted(data, key=lambda x: (-x['total'], x['id'] if x['id'] is not None else float('inf')))
-    if category == 'asp_men':
-        del data[-63:]
-    elif category == 'asp_wmn':
-        del data[-88:]
+    del data[-62:]
     if category_binary == True:
         return render_template('testapp/ranking_asp.html', category=category, data=data)
     else:
