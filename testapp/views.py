@@ -21,13 +21,13 @@ def reverse(category):
     elif category == "f_fin_men":
         return "f_fin_wmn"   
     elif category == "f_fin_wmn":
-        return "f_fin_menl"
+        return "f_fin_men"
     
 def title(category):
-    if 'men' in category:
-        return "> Women's Result"
-    else:
+    if 'women' in category:
         return "> Men's Result"
+    else:
+        return "> Women's Result"
 
 def categorytranslate(category):
     if category == "asp_men":
