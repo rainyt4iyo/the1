@@ -5,6 +5,30 @@ import time
 import logging
 from contextlib import contextmanager
 
+def reverse(category):
+    if category == "asp_men":
+        return "asp_wmn"
+    elif category == "asp_wmn":
+        return "asp_men"  
+    elif category == "fin_men":
+        return "fin_wmn"   
+    elif category == "fin_wmn":
+        return "fin_men"
+    elif category == "f_asp_men":
+        return "f_asp_wmn"
+    elif category == "f_asp_wmn":
+        return "f_asp_men"  
+    elif category == "f_fin_men":
+        return "f_fin_wmn"   
+    elif category == "f_fin_wmn":
+        return "f_fin_menl"
+    
+def title(category):
+    if 'men' in category:
+        return "> Women's Result"
+    else:
+        return "> Men's Result"
+
 def categorytranslate(category):
     if category == "asp_men":
         return "- Aspirant - Men's Qualification "
@@ -379,6 +403,9 @@ def ranking(category):
                        cursorclass=pymysql.cursors.DictCursor)
     cursor = conn.cursor()
     cat = category
+    rev = reverse(category)
+    rev_link = f"/ranking/{rev}"
+    rev_title = title(rev)
     try:
         with conn.cursor() as cursor:
             sql = f"SELECT * from {category} ORDER BY id"
@@ -420,11 +447,11 @@ def ranking(category):
     elif cat == "f_asp_wmn":
         del data[-1:]
     if category_binary == True:
-        return render_template('testapp/ranking_asp.html', category=category, data=data)
+        return render_template('testapp/ranking_asp.html', category=category, data=data, rev_link=rev_link, rev_title=rev_title)
     elif cat == "asp_men" or cat == "asp_wmn" or cat == "fin_men" or cat == "fin_wmn":
-        return render_template('testapp/ranking_index.html', category=category, data=data)
+        return render_template('testapp/ranking_index.html', category=category, data=data, rev_link=rev_link, rev_title=rev_title)
     else:
-        return render_template('testapp/ranking.html', category=category, data=data)
+        return render_template('testapp/ranking.html', category=category, data=data, rev_link=rev_link, rev_title=rev_title)
 
 
 @app.route('/scorecheck/<category>')
