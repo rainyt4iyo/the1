@@ -24,7 +24,7 @@ def reverse(category):
         return "f_fin_men"
     
 def title(category):
-    if 'women' in category:
+    if 'wmn' in category:
         return "> Men's Result"
     else:
         return "> Women's Result"
