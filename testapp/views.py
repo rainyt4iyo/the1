@@ -446,6 +446,15 @@ def ranking(category):
         del data[-1:]
     elif cat == "f_asp_wmn":
         del data[-1:]
+    elif cat == "fin_wmn":
+        del data[-79:]
+    elif cat == "f_asp_wmn":
+        del data[-81:]
+    elif cat == "f_asp_wmn":
+        del data[-1:]
+    elif cat == "f_asp_wmn":
+        del data[-1:]
+
     if category_binary == True:
         return render_template('testapp/ranking_asp.html', category=category, data=data, rev_link=rev_link, rev_title=rev_title)
     elif cat == "asp_men" or cat == "asp_wmn" or cat == "fin_men" or cat == "fin_wmn":
