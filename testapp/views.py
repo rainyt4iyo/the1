@@ -403,9 +403,9 @@ def ranking(category):
                        cursorclass=pymysql.cursors.DictCursor)
     cursor = conn.cursor()
     cat = category
-    rev = reverse(category)
+    rev = reverse(cat)
     rev_link = f"/ranking/{rev}"
-    rev_title = title(rev)
+    rev_title = title(cat)
     try:
         with conn.cursor() as cursor:
             sql = f"SELECT * from {category} ORDER BY id"
