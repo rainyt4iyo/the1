@@ -438,22 +438,7 @@ def ranking(category):
             prev_score = row['total']
         row['rank'] = rank
 
-    if cat == "asp_men":
-        del data[-63:]
-    elif cat == "asp_wmn":
-        del data[-88:]
-    elif cat == "f_asp_men":
-        del data[-1:]
-    elif cat == "f_asp_wmn":
-        del data[-1:]
-    elif cat == "fin_men":
-        del data[-79:]
-    elif cat == "fin_wmn":
-        del data[-81:]
-    elif cat == "f_fin_men":
-        del data[-1:]
-    elif cat == "f_fin_wmn":
-        del data[-1:]
+   
 
     if category_binary == True:
         return render_template('testapp/ranking_asp.html', category=category, data=data, rev_link=rev_link, rev_title=rev_title)
@@ -506,22 +491,7 @@ def ranking_output(category):
             prev_score = row['total']
         row['rank'] = rank
 
-    if cat == "asp_men":
-        del data[-63:]
-    elif cat == "asp_wmn":
-        del data[-88:]
-    elif cat == "f_asp_men":
-        del data[-1:]
-    elif cat == "f_asp_wmn":
-        del data[-1:]
-    elif cat == "fin_men":
-        del data[-79:]
-    elif cat == "fin_wmn":
-        del data[-81:]
-    elif cat == "f_fin_men":
-        del data[-1:]
-    elif cat == "f_fin_wmn":
-        del data[-1:]
+
 
     if category_binary == True:
         return render_template('testapp/ranking_asp.html', category=category, data=data, rev_link=rev_link, rev_title=rev_title)
