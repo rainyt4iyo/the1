@@ -463,6 +463,75 @@ def ranking(category):
         return render_template('testapp/ranking.html', category=category, data=data, rev_link=rev_link, rev_title=rev_title)
 
 
+@app.route('/ranking_output/<category>')
+def ranking_output(category):
+    conn = pymysql.connect(host='localhost',
+                       user='t4',
+                       password='t4_password',
+                       database='the1',
+                       cursorclass=pymysql.cursors.DictCursor)
+    cursor = conn.cursor()
+    cat = category
+    rev = reverse(cat)
+    rev_link = f"/ranking/{rev}"
+    rev_title = title(cat)
+    try:
+        with conn.cursor() as cursor:
+            sql = f"SELECT * from {category} ORDER BY id"
+            cursor.execute(sql)
+            category_binary = False
+            if category == "f_asp_men":
+                category_binary = True
+            elif category == "f_asp_wmn":
+                category_binary = True
+            category = categorytranslateWithBrank(category)
+            category = category.replace("\n", "<br>")
+            data = cursor.fetchall()
+    finally:
+        conn.close()
+    
+    for i in data:
+        if i is None:
+            continue
+        scorecalc(i)
+    data = sorted(data, key=lambda x: (-x['total'], x['id'] if x['id'] is not None else float('inf')))
+    # --- 同点なら同じ順位にする ---
+    rank = 1
+    prev_score = None
+    same_rank_count = 0
+
+    for i, row in enumerate(data):
+        if row['total'] != prev_score:
+            rank = i + 1  # 新しいスコアなので、順位は現在のインデックス + 1
+            prev_score = row['total']
+        row['rank'] = rank
+
+    if cat == "asp_men":
+        del data[-63:]
+    elif cat == "asp_wmn":
+        del data[-88:]
+    elif cat == "f_asp_men":
+        del data[-1:]
+    elif cat == "f_asp_wmn":
+        del data[-1:]
+    elif cat == "fin_men":
+        del data[-79:]
+    elif cat == "fin_wmn":
+        del data[-81:]
+    elif cat == "f_fin_men":
+        del data[-1:]
+    elif cat == "f_fin_wmn":
+        del data[-1:]
+
+    if category_binary == True:
+        return render_template('testapp/ranking_asp.html', category=category, data=data, rev_link=rev_link, rev_title=rev_title)
+    elif cat == "asp_men" or cat == "asp_wmn" or cat == "fin_men" or cat == "fin_wmn":
+        return render_template('testapp/ranking_index.html', category=category, data=data, rev_link=rev_link, rev_title=rev_title)
+    else:
+        return render_template('testapp/ranking.html', category=category, data=data, rev_link=rev_link, rev_title=rev_title)
+
+
+
 @app.route('/scorecheck/<category>')
 def scorecheck(category):
     conn = pymysql.connect(host='localhost',
