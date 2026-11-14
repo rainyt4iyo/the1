@@ -160,6 +160,11 @@ def topsumcalc(dictdata):
     dictdata['topsum'] = sum
     return dictdata
 
+def countbackrankzero(dictdata):
+    if dictdata['countbackrank'] == None:
+        dictdata['countbackrank'] = 0
+    return dictdata
+
 def scorecalc_listed(dictdata):
     score_list = []
     z1, z2, z3, z4 = dictdata['z1'], dictdata['z2'], dictdata['z3'], dictdata['z4']
@@ -436,6 +441,7 @@ def ranking(category):
     rev = reverse(cat)
     rev_link = f"/ranking/{rev}"
     rev_title = title(cat)
+    final_prefix = "f_"
     try:
         with conn.cursor() as cursor:
             sql = f"SELECT * from {category} ORDER BY id"
@@ -445,37 +451,69 @@ def ranking(category):
                 category_binary = True
             elif category == "f_asp_wmn":
                 category_binary = True
+            category_name = category
             category = categorytranslateWithBrank(category)
             category = category.replace("\n", "<br>")
             data = cursor.fetchall()
     finally:
         conn.close()
+
+
+    if not category_name.startswith(final_prefix):
+        for i in data:
+            if i is None:
+                continue
+            scorecalc(i)
+            topsumcalc(i)
+            zonesumcalc(i)
+            omitName(i)
+        data = sorted(data, key=lambda x: (-x['total'], x['topsum'], x['zonesum'], x['id'] if x['id'] is not None else float('inf')))
+        # --- 同点なら同じ順位にする ---
+        rank = 1
+        prev_score = None
+        prev_zonesum = None
+        prev_topsum = None
+        same_rank_count = 0
+
+        for i, row in enumerate(data):
+            if row['total'] != prev_score or row['zonesum'] != prev_zonesum or row['topsum'] != prev_topsum:
+                rank = i + 1
+                prev_score = row['total']
+                prev_zonesum = row['zonesum']
+                prev_topsum = row['topsum']
+            row['rank'] = rank
+
+    else:
+        print(data)
+        for i in data:
+            if i is None:
+                continue
+            scorecalc(i)
+            topsumcalc(i)
+            zonesumcalc(i)
+            omitName(i)
+            countbackrankzero(i)
+        data = sorted(data, key=lambda x: (-x['total'],x['countbackrank'], x['topsum'], x['zonesum'], x['id'] if x['id'] is not None else float('inf')))    
+        # --- 同点なら同じ順位にする ---
+        rank = 1
+        prev_score = None
+        prev_countbackrank = None
+        prev_zonesum = None
+        prev_topsum = None
+        same_rank_count = 0
+
+        for i, row in enumerate(data):
+            if row['total'] != prev_score or row['countbackrank'] != prev_countbackrank or row['zonesum'] != prev_zonesum or row['topsum'] != prev_topsum:
+                rank = i + 1
+                prev_score = row['total']
+                prev_countbackrank = row['countbackrank']
+                prev_zonesum = row['zonesum']
+                prev_topsum = row['topsum']
+            row['rank'] = rank
+
+        print(data)
+
     
-    for i in data:
-        if i is None:
-            continue
-        scorecalc(i)
-        topsumcalc(i)
-        zonesumcalc(i)
-        omitName(i)
-    data = sorted(data, key=lambda x: (-x['total'], x['topsum'], x['zonesum'], x['id'] if x['id'] is not None else float('inf')))
-    # --- 同点なら同じ順位にする ---
-    rank = 1
-    prev_score = None
-    prev_zonesum = None
-    prev_topsum = None
-    same_rank_count = 0
-
-    for i, row in enumerate(data):
-        if row['total'] != prev_score or row['zonesum'] != prev_zonesum or row['topsum'] != prev_topsum:
-            rank = i + 1
-            prev_score = row['total']
-            prev_zonesum = row['zonesum']
-            prev_topsum = row['topsum']
-        row['rank'] = rank
-
-
-   
 
     if category_binary == True:
         return render_template('testapp/ranking_asp.html', category=category, data=data, rev_link=rev_link, rev_title=rev_title)
