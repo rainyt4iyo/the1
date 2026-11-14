@@ -130,6 +130,36 @@ def scorecalc(dictdata):
     dictdata['total'] = round(score,10)
     return dictdata 
 
+def zonesumcalc(dictdata):
+    score = 0
+    z1, z2, z3, z4 = dictdata['z1'], dictdata['z2'], dictdata['z3'], dictdata['z4']
+    if z1 == None:
+        z1 = 0
+    if z2 == None:
+        z2 = 0
+    if z3 == None:
+        z3 = 0
+    if z4 == None:
+        z4 = 0
+    sum = z1 + z2 + z3 + z4
+    dictdata['zonesum'] = sum
+    return dictdata
+    
+def topsumcalc(dictdata):
+    score = 0
+    t1, t2, t3, t4 = dictdata['t1'], dictdata['t2'], dictdata['t3'], dictdata['t4']
+    if t1 == None:
+        t1 = 0
+    if t2 == None:
+        t2 = 0
+    if t3 == None:
+        t3 = 0
+    if t4 == None:
+        t4 = 0
+    sum = t1 + t2 + t3 + t4
+    dictdata['topsum'] = sum
+    return dictdata
+
 def scorecalc_listed(dictdata):
     score_list = []
     z1, z2, z3, z4 = dictdata['z1'], dictdata['z2'], dictdata['z3'], dictdata['z4']
@@ -425,18 +455,25 @@ def ranking(category):
         if i is None:
             continue
         scorecalc(i)
+        topsumcalc(i)
+        zonesumcalc(i)
         omitName(i)
-    data = sorted(data, key=lambda x: (-x['total'], x['id'] if x['id'] is not None else float('inf')))
+    data = sorted(data, key=lambda x: (-x['total'], x['topsum'], x['zonesum'], x['id'] if x['id'] is not None else float('inf')))
     # --- 同点なら同じ順位にする ---
     rank = 1
     prev_score = None
+    prev_zonesum = None
+    prev_topsum = None
     same_rank_count = 0
 
     for i, row in enumerate(data):
-        if row['total'] != prev_score:
-            rank = i + 1  # 新しいスコアなので、順位は現在のインデックス + 1
+        if row['total'] != prev_score or row['zonesum'] != prev_zonesum or row['topsum'] != prev_topsum:
+            rank = i + 1
             prev_score = row['total']
+            prev_zonesum = row['zonesum']
+            prev_topsum = row['topsum']
         row['rank'] = rank
+
 
    
 
@@ -479,7 +516,7 @@ def ranking_output(category):
         if i is None:
             continue
         scorecalc(i)
-    data = sorted(data, key=lambda x: (-x['total'], x['id'] if x['id'] is not None else float('inf')))
+    data = sorted(data, key=lambda x: (-x['total'], x['topsum'], x['zonesum'], x['id'] if x['id'] is not None else float('inf')))
     # --- 同点なら同じ順位にする ---
     rank = 1
     prev_score = None
