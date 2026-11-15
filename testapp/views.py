@@ -555,24 +555,14 @@ def ranking_output(category):
         scorecalc(i)
         topsumcalc(i)
         zonesumcalc(i)
-    data = sorted(data, key=lambda x: (-x['total'], x['topsum'], x['zonesum'], x['id'] if x['id'] is not None else float('inf')))
+    
     # --- 同点なら同じ順位にする ---
-    rank = 1
-    prev_score = None
-    prev_zonesum = None
-    prev_topsum = None
-    same_rank_count = 0
+    rank = 0
 
     for i, row in enumerate(data):
-        if row['total'] != prev_score or row['zonesum'] != prev_zonesum or row['topsum'] != prev_topsum:
-            rank = i + 1
-            prev_score = row['total']
-            prev_zonesum = row['zonesum']
-            prev_topsum = row['topsum']
         row['rank'] = rank
+        rank = rank + 1
 
-
-   
 
     if category_binary == True:
         return render_template('testapp/ranking_asp.html', category=category, data=data, rev_link=rev_link, rev_title=rev_title)
