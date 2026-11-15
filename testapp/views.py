@@ -491,7 +491,6 @@ def ranking(category):
             scorecalc(i)
             topsumcalc(i)
             zonesumcalc(i)
-            omitName(i)
             countbackrankzero(i)
         data = sorted(data, key=lambda x: (-x['total'],x['countbackrank'], x['topsum'], x['zonesum'], x['id'] if x['id'] is not None else float('inf')))    
         # --- 同点なら同じ順位にする ---
